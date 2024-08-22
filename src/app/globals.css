@@ -59,7 +59,6 @@
   }
 }
 
-
 @layer base {
   * {
     @apply border-border;
@@ -67,4 +66,20 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.auth {
+  @apply flex-center min-h-screen w-full bg-purple-100
+}
+
+.root {
+  @apply flex min-h-screen w-full flex-col bg-white lg:flex-row;
+}
+
+.flex-center {
+  @apply flex justify-center items-center;
+}
+
+.flex-between {
+  @apply flex justify-between items-center;
 }
