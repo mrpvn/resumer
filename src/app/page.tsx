@@ -1,3 +1,4 @@
+import { ModeToggle } from "@/components/shared/ModeToggle";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -5,6 +6,7 @@ export default function Home() {
     <div>
       Resumer
       <Button>Click Me</Button>
+      <ModeToggle/>
     </div>
   );
 }
