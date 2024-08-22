@@ -1,14 +1,9 @@
-import { ModeToggle } from "@/components/shared/ModeToggle";
-import { Button } from "@/components/ui/button";
-import { UserButton } from "@clerk/nextjs";
+import Header from "@/components/shared/Header";
 
 export default function Home() {
   return (
     <div>
-      Resumer
-      <Button>Click Me</Button>
-      <ModeToggle/>
-      <UserButton/>
+      <Header/>
     </div>
   );
 }

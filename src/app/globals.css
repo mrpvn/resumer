@@ -83,3 +83,8 @@
 .flex-between {
   @apply flex justify-between items-center;
 }
+
+.cl-avatarBox {
+  width: 2.25rem;
+  height: 2.25rem;
+}
