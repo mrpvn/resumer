@@ -1,7 +1,7 @@
 "use client"
 
-import FormSection from '@/components/resume-preview/FormSection'
-import ResumePreview from '@/components/resume-preview/ResumePreview'
+import FormSection from '@/components/shared/FormSection'
+import ResumePreview from '@/components/shared/ResumePreview'
 import React from 'react'
 
 const EditResume = () => {

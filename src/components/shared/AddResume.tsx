@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 const AddResume = () => {
-  const [resumeTitle, setResumeTitle] = useState("");
+  const [resumeTitle, setResumeTitle] = useState<string | null>("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = () => {
