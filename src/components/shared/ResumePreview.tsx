@@ -8,7 +8,7 @@ import dummyData from '@/data/dummyData'
 
 const ResumePreview = () => {
   return (
-    <div>
+    <div className='shadow-lg h-full p-14'>
       <PersonalDetail personalDetail={dummyData.personalDetail}/>
       <Summary summary={dummyData.summary}/>
       <ProfessionalExp experience={dummyData.experience}/>
