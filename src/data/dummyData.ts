@@ -76,17 +76,17 @@ const dummyData = {
       {
           id:1,
           name:'React',
-          rating:100,
+          rating:75,
       },
       {
           id:1,
           name:'MySql',
-          rating:80,
+          rating:90,
       },
       {
           id:1,
           name:'React Native',
-          rating:100,
+          rating:95,
       }
     ]
 }

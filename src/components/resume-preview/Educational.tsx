@@ -13,7 +13,7 @@ const Educational: React.FC<EducationProps> = ({education}) => {
               {edu.degree} in {edu.major}
               <span>{edu.startDate} - {edu.endDate}</span>
             </h2>
-            <p className='text-xs my-2'>{edu.description}</p>
+            <p className='text-sm my-2'>{edu.description}</p>
           </div>
         )
       })}

@@ -13,7 +13,7 @@ const ProfessionalExp: React.FC<ExperienceProps> = ({experience}) => {
             {exp.companyName}, {exp.city}, {exp.state}
             <span>{exp.startDate} - {exp.currentlyWorking?"Present" : exp.endDate}</span>
           </h2>
-          <div dangerouslySetInnerHTML={{__html: exp?.workSummary}}/>
+          <div className='text-sm my-2' dangerouslySetInnerHTML={{__html: exp?.workSummary}}/>
         </div>
       )
     })}
