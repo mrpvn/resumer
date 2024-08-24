@@ -33,8 +33,8 @@ export const EducationFormSchema = z.object({
 })
 
 export const SkillsFormSchema = z.object({
-  skill: z.string(),
-  rating: z.string()
+  skill: z.string().min(1, {message: "Add skill"}),
+  rating: z.string().min(1, {message: "Add rating to your skill"})
 })
 
 

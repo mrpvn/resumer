@@ -1,51 +1,61 @@
 import { ExperienceFormSchema } from '@/lib/form-validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form';
+import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from '../ui/textarea';
-import { MoveLeft, MoveRight } from 'lucide-react';
+import { CirclePlus, MoveLeft, MoveRight } from 'lucide-react';
 
 const ExperienceForm = () => {
-  const formFeild = {
-    title: '',
-    companyName: '',
-    city: '',
-    state: '',
-    startDate: '',
-    endDate: '',
-    workSummary: ''
-  }
-  const [experience, setExperience] = useState([formFeild]);
+
+  const formSchema = z.object({
+    experiences: z.array(ExperienceFormSchema),
+  });
 
   // 1. Define your form.
-  const form = useForm<z.infer<typeof ExperienceFormSchema>>({
-    resolver: zodResolver(ExperienceFormSchema),
-    defaultValues: formFeild
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      experiences: [{ title: '', companyName: '', city: '', state: '', startDate: '', endDate: '', workSummary: '' }],
+    }
   })
-  
+  const { control } = form;
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "experiences",
+  });
+
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ExperienceFormSchema>) {
+  function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
   }
+
+  const addNewForm = () => append({ title: '', companyName: '', city: '', state: '', startDate: '', endDate: '', workSummary: '' });
+
   return (
     <div className='p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4'>
-      <h2 className='font-bold text-lg'>Professional Experience</h2>
-      <p>Add your past experience</p>
+      <div className='flex justify-between items-center'>
+        <div>
+          <h2 className='font-bold text-lg'>Professional Experience</h2>
+          <p>Add your past experience</p>
+        </div>
+        <CirclePlus onClick={addNewForm} size={36} className='cursor-pointer hover:scale-90 transition-all' absoluteStrokeWidth />
+      </div>
       {
-        experience?.map((item, i) => {
+        fields?.map((item, i) => {
           return (
-            <div key={i}>
+            <div key={item.id}>
                  <Form {...form}>
                     <form className='grid grid-cols-2 gap-3 border p-3 my-5 rounded-lg' onSubmit={form.handleSubmit(onSubmit)}>
                       <FormField
                         control={form.control}
-                        name="title"
+                        name={`experiences.${i}.title`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Title</FormLabel>
@@ -58,7 +68,7 @@ const ExperienceForm = () => {
                       />
                       <FormField
                         control={form.control}
-                        name="companyName"
+                        name={`experiences.${i}.companyName`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Company Name</FormLabel>
@@ -72,7 +82,7 @@ const ExperienceForm = () => {
                       />
                       <FormField
                         control={form.control}
-                        name="city"
+                        name={`experiences.${i}.city`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>City</FormLabel>
@@ -85,7 +95,7 @@ const ExperienceForm = () => {
                       />
                       <FormField
                         control={form.control}
-                        name="state"
+                        name={`experiences.${i}.state`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>State</FormLabel>
@@ -98,7 +108,7 @@ const ExperienceForm = () => {
                       />
                       <FormField
                         control={form.control}
-                        name="startDate"
+                        name={`experiences.${i}.startDate`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Start Date</FormLabel>
@@ -111,7 +121,7 @@ const ExperienceForm = () => {
                       />
                       <FormField
                         control={form.control}
-                        name="endDate"
+                        name={`experiences.${i}.endDate`}
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>End Date</FormLabel>
@@ -124,7 +134,7 @@ const ExperienceForm = () => {
                       />
                       <FormField
                         control={form.control}
-                        name="workSummary"
+                        name={`experiences.${i}.workSummary`}
                         render={({ field }) => (
                           <FormItem className='col-span-2'>
                             <FormLabel>Work Summary</FormLabel>
@@ -135,8 +145,11 @@ const ExperienceForm = () => {
                           </FormItem>
                         )}
                       />
-                      <Button className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
-                      <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button>
+                      {i === 0 ? <>
+                        <Button className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
+                        <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button></>
+                        : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Delete</Button>
+                      }
                     </form>
                   </Form>
             </div>
