@@ -2,7 +2,7 @@ import { z } from "zod"
 import React from 'react'
 import { Input } from '../ui/input'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { ControllerRenderProps, useForm } from "react-hook-form"
 import { PersonalDetailFormSchema } from '@/lib/form-validation'
 import { Button } from "../ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
@@ -10,9 +10,8 @@ import { MoveLeft, MoveRight } from "lucide-react"
 import { useResumeContext } from "@/context/context"
 
 const PersonalDetailForm = () => {
-    const {activeFormIndex, setActiveFormIndex} = useResumeContext();
+    const {activeFormIndex, setActiveFormIndex, setFormPreview, formPreview} = useResumeContext();
 
-    // 1. Define your form.
     const form = useForm<z.infer<typeof PersonalDetailFormSchema>>({
       resolver: zodResolver(PersonalDetailFormSchema),
       defaultValues: {
@@ -25,11 +24,23 @@ const PersonalDetailForm = () => {
       },
     })
    
-    // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
       setActiveFormIndex((i:number) => i+1)
       console.log(values)
     }
+
+    function handleFieldChange(e:React.ChangeEvent<HTMLInputElement>, field: any){
+      const {name, value} = e.target
+      field.onChange(value);
+      setFormPreview((prevState: FormPreviewType) => ({
+        ...prevState,
+        personalDetail: {
+          ...prevState.personalDetail,
+          [name]: value
+        }
+      }))
+    }
+
   return (
     <div className='p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4'>
       <h2 className='font-bold text-lg'>Personal Details</h2>
@@ -43,7 +54,9 @@ const PersonalDetailForm = () => {
               <FormItem>
                 <FormLabel>First Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Jhon" {...field} />
+                  <Input
+                    placeholder="Jhon" {...field} onChange={(e) => handleFieldChange(e, field)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -56,7 +69,8 @@ const PersonalDetailForm = () => {
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Doe" {...field} />
+                <Input placeholder="Doe" {...field} onChange={(e) => handleFieldChange(e, field)}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -69,7 +83,7 @@ const PersonalDetailForm = () => {
               <FormItem className="col-span-2">
                 <FormLabel>Job Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Full stack developer" {...field} />
+                  <Input placeholder="Full stack developer" {...field} onChange={(e) => handleFieldChange(e, field)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -82,7 +96,7 @@ const PersonalDetailForm = () => {
               <FormItem className="col-span-2">
                 <FormLabel>Address</FormLabel>
                 <FormControl>
-                  <Input placeholder="A-1, New York" {...field} />
+                  <Input placeholder="A-1, New York" {...field} onChange={(e) => handleFieldChange(e, field)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -95,7 +109,7 @@ const PersonalDetailForm = () => {
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="+1 (123) 456-7890" {...field} />
+                  <Input placeholder="+1 (123) 456-7890" {...field} onChange={(e) => handleFieldChange(e, field)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -108,7 +122,7 @@ const PersonalDetailForm = () => {
               <FormItem>
                 <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="jhon@gmail.com" {...field} />
+                  <Input placeholder="jhon@gmail.com" {...field} onChange={(e) => handleFieldChange(e, field)} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

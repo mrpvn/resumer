@@ -1,5 +1,3 @@
-import Summary from "@/components/resume-preview/Summary";
-
 const dummyData = {
     personalDetail: {
         firstName:'James',
@@ -74,17 +72,17 @@ const dummyData = {
           rating:80,
       },
       {
-          id:1,
+          id:2,
           name:'React',
           rating:75,
       },
       {
-          id:1,
+          id:3,
           name:'MySql',
           rating:90,
       },
       {
-          id:1,
+          id:4,
           name:'React Native',
           rating:95,
       }

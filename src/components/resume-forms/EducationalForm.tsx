@@ -12,7 +12,7 @@ import { useResumeContext } from '@/context/context';
 
 
 const EducationalForm = () => {
-  const {setActiveFormIndex} = useResumeContext();
+  const {setActiveFormIndex, setFormPreview} = useResumeContext();
 
   const formSchema = z.object({
     academics: z.array(EducationFormSchema),
@@ -40,6 +40,35 @@ const EducationalForm = () => {
     console.log(values)
   }
 
+  function handleFieldChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: any, index: number){
+    const {name, value} = e.target
+    const fieldName = name.split(".")[2] 
+    field.onChange(value);
+    setFormPreview((prevState: FormPreviewType) => {
+      const updatedEducation = [...prevState.education];
+      updatedEducation[index] = {
+        ...updatedEducation[index],
+        [fieldName]: value,
+      };
+      return {
+        ...prevState,
+        education: updatedEducation
+      };
+    })
+  }
+
+  function handleFieldRemove(i:number){
+    remove(i)
+    setFormPreview((prevState: FormPreviewType) => {
+      const updatedEducation = [...prevState.education];
+      updatedEducation.splice(i, 1);
+      return {
+        ...prevState,
+        education: updatedEducation
+      }
+    })
+  }
+
   const addNewForm = () => append({ universityName: '', degree: '', major: '', startDate: '', endDate: '', description: '' });
 
   return (
@@ -65,7 +94,7 @@ const EducationalForm = () => {
                             <FormLabel>University Name</FormLabel>
 
                             <FormControl>
-                              <Input placeholder="Delhi University" {...field} />
+                              <Input placeholder="Delhi University" {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -78,7 +107,7 @@ const EducationalForm = () => {
                           <FormItem>
                             <FormLabel>Degree</FormLabel>
                             <FormControl>
-                              <Input placeholder="Bachelor" {...field} />
+                              <Input placeholder="Bachelor" {...field} onChange={(e) => handleFieldChange(e, field, i)}/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -91,7 +120,7 @@ const EducationalForm = () => {
                           <FormItem>
                             <FormLabel>Major</FormLabel>
                             <FormControl>
-                              <Input placeholder="Computer Applicatons" {...field} />
+                              <Input placeholder="Computer Applicatons" {...field} onChange={(e) => handleFieldChange(e, field, i)}/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -104,7 +133,7 @@ const EducationalForm = () => {
                           <FormItem>
                             <FormLabel>Start Date</FormLabel>
                             <FormControl>
-                              <Input type='date' {...field} />
+                              <Input type='date' {...field} onChange={(e) => handleFieldChange(e, field, i)}/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -117,7 +146,7 @@ const EducationalForm = () => {
                           <FormItem>
                             <FormLabel>End Date</FormLabel>
                             <FormControl>
-                              <Input type='date' {...field} />
+                              <Input type='date' {...field} onChange={(e) => handleFieldChange(e, field, i)}/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -130,7 +159,7 @@ const EducationalForm = () => {
                           <FormItem className='col-span-2'>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
-                              <Textarea placeholder="description..." {...field} />
+                              <Textarea placeholder="description..." {...field} onChange={(e) => handleFieldChange(e, field, i)}/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -139,7 +168,7 @@ const EducationalForm = () => {
                       {i === 0 ? <>
                         <Button onClick={() => setActiveFormIndex((i: number) => i-1)} className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
                         <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button></>
-                        : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Remove</Button>
+                        : <Button className='col-span-2' onClick={() => handleFieldRemove(i)} variant='destructive' type='button'>Remove</Button>
                       }
                     </form>
                   </Form>

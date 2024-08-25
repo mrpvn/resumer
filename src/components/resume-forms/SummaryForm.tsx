@@ -16,9 +16,10 @@ import {
 } from "@/components/ui/form"
 import { MoveLeft, MoveRight } from 'lucide-react'
 import { useResumeContext } from '@/context/context'
+import { Input } from '../ui/input'
 
 const SummaryForm = () => {
-    const {setActiveFormIndex} = useResumeContext();
+    const {setActiveFormIndex, setFormPreview} = useResumeContext();
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof SummaryFormSchema>>({
@@ -35,6 +36,18 @@ const SummaryForm = () => {
       // ✅ This will be type-safe and validated.
       console.log(values)
     }
+
+    function handleFieldChange(e:React.ChangeEvent<HTMLTextAreaElement>, field: any){
+      const {name, value} = e.target
+      field.onChange(value);
+      setFormPreview((prevState: FormPreviewType) => ({
+        ...prevState,
+        summary: {
+          [name]: value
+        }
+      }))
+    }
+
   return (
     <div className='p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4'>
     <h2 className='font-bold text-lg'>Summary</h2>
@@ -48,7 +61,7 @@ const SummaryForm = () => {
             <FormItem className='mt-7'>
               <FormLabel>Add Summary</FormLabel>
               <FormControl>
-                <Textarea placeholder="I'm a full stack developer..." {...field} />
+                <Textarea placeholder="I'm a full stack developer..." {...field} onChange={(e) => handleFieldChange(e, field)}/>
               </FormControl>
               <FormDescription>
               Provide a brief summary that highlights your key skills, experiences, and career goals. This is your opportunity to introduce yourself and make a strong first impression.

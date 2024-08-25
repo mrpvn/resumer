@@ -12,7 +12,7 @@ import { useResumeContext } from '@/context/context';
 
 const ExperienceForm = () => {
 
-  const {setActiveFormIndex} = useResumeContext()
+  const {setActiveFormIndex, setFormPreview} = useResumeContext()
 
   const formSchema = z.object({
     experiences: z.array(ExperienceFormSchema),
@@ -40,7 +40,37 @@ const ExperienceForm = () => {
     console.log(values)
   }
 
-  const addNewForm = () => append({ title: '', companyName: '', city: '', state: '', startDate: '', endDate: '', workSummary: '' });
+  function handleFieldChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: any, index: number){
+    const {name, value} = e.target
+    const fieldName = name.split(".")[2] 
+    field.onChange(value);
+    setFormPreview((prevState: FormPreviewType) => {
+      const updatedExperience = [...prevState.experience];
+      updatedExperience[index] = {
+        ...updatedExperience[index],
+        [fieldName]: value,
+      };
+      return {
+        ...prevState,
+        experience: updatedExperience
+      };
+    })
+  }
+
+  function handleFieldRemove(i:number){
+    remove(i)
+    setFormPreview((prevState: FormPreviewType) => {
+      const updatedExperience = [...prevState.experience];
+      updatedExperience.splice(i, 1);
+      return {
+        ...prevState,
+        experience: updatedExperience
+      }
+    })
+  }
+
+  const addNewForm = () => append({ title: '', companyName: '', city: '', state: '', startDate: '', endDate: '', workSummary: '' })
+  
 
   return (
     <div className='p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4'>
@@ -64,7 +94,7 @@ const ExperienceForm = () => {
                           <FormItem>
                             <FormLabel>Title</FormLabel>
                             <FormControl>
-                              <Input placeholder="SWE" {...field} />
+                              <Input placeholder="SWE" {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -78,7 +108,7 @@ const ExperienceForm = () => {
                             <FormLabel>Company Name</FormLabel>
 
                             <FormControl>
-                              <Input placeholder="Microsoft" {...field} />
+                              <Input placeholder="Microsoft" {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -91,7 +121,7 @@ const ExperienceForm = () => {
                           <FormItem>
                             <FormLabel>City</FormLabel>
                             <FormControl>
-                              <Input placeholder="New York" {...field} />
+                              <Input placeholder="New York" {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -104,7 +134,7 @@ const ExperienceForm = () => {
                           <FormItem>
                             <FormLabel>State</FormLabel>
                             <FormControl>
-                              <Input placeholder="Washington" {...field} />
+                              <Input placeholder="Washington" {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -117,7 +147,7 @@ const ExperienceForm = () => {
                           <FormItem>
                             <FormLabel>Start Date</FormLabel>
                             <FormControl>
-                              <Input type='date' {...field} />
+                              <Input type='date' {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -130,7 +160,7 @@ const ExperienceForm = () => {
                           <FormItem>
                             <FormLabel>End Date</FormLabel>
                             <FormControl>
-                              <Input type='date' {...field} />
+                              <Input type='date' {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -143,7 +173,7 @@ const ExperienceForm = () => {
                           <FormItem className='col-span-2'>
                             <FormLabel>Work Summary</FormLabel>
                             <FormControl>
-                              <Textarea placeholder="work summary..." {...field} />
+                              <Textarea placeholder="work summary..." {...field} onChange={(e) => handleFieldChange(e, field, i)} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -152,7 +182,7 @@ const ExperienceForm = () => {
                       {i === 0 ? <>
                         <Button onClick={() => setActiveFormIndex((i: number) => i-1)} className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
                         <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button></>
-                        : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Remove</Button>
+                        : <Button className='col-span-2' onClick={() => handleFieldRemove(i)} variant='destructive' type='button'>Remove</Button>
                       }
                     </form>
                   </Form>

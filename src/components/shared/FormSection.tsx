@@ -5,7 +5,7 @@ import ExperienceForm from '../resume-forms/ExperienceForm'
 import EducationalForm from '../resume-forms/EducationalForm'
 import SkillForm from '../resume-forms/SkillForm'
 import { Button } from '../ui/button'
-import { ArrowLeft, ArrowRight, LayoutGrid } from 'lucide-react'
+import { LayoutGrid } from 'lucide-react'
 import { useResumeContext } from '@/context/context'
 
 const FormSection = () => {
