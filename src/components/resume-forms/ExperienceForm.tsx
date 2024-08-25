@@ -8,8 +8,11 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@
 import { Input } from "@/components/ui/input"
 import { Textarea } from '../ui/textarea';
 import { CirclePlus, MoveLeft, MoveRight } from 'lucide-react';
+import { useResumeContext } from '@/context/context';
 
 const ExperienceForm = () => {
+
+  const {setActiveFormIndex} = useResumeContext()
 
   const formSchema = z.object({
     experiences: z.array(ExperienceFormSchema),
@@ -31,6 +34,7 @@ const ExperienceForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    setActiveFormIndex((i:number) => i+1)
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
@@ -146,9 +150,9 @@ const ExperienceForm = () => {
                         )}
                       />
                       {i === 0 ? <>
-                        <Button className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
+                        <Button onClick={() => setActiveFormIndex((i: number) => i-1)} className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
                         <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button></>
-                        : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Delete</Button>
+                        : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Remove</Button>
                       }
                     </form>
                   </Form>

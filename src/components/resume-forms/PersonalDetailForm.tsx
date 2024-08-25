@@ -7,8 +7,11 @@ import { PersonalDetailFormSchema } from '@/lib/form-validation'
 import { Button } from "../ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import { MoveLeft, MoveRight } from "lucide-react"
+import { useResumeContext } from "@/context/context"
 
 const PersonalDetailForm = () => {
+    const {activeFormIndex, setActiveFormIndex} = useResumeContext();
+
     // 1. Define your form.
     const form = useForm<z.infer<typeof PersonalDetailFormSchema>>({
       resolver: zodResolver(PersonalDetailFormSchema),
@@ -24,8 +27,7 @@ const PersonalDetailForm = () => {
    
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
+      setActiveFormIndex((i:number) => i+1)
       console.log(values)
     }
   return (
@@ -112,7 +114,7 @@ const PersonalDetailForm = () => {
               </FormItem>
             )}
           />
-          <Button className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
+          <Button disabled={activeFormIndex <= 1} className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
           <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button>
         </form>
       </Form>

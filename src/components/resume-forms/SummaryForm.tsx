@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Textarea } from '../ui/textarea'
 import { SummaryFormSchema } from '@/lib/form-validation'
 import { useForm } from 'react-hook-form'
@@ -15,8 +15,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { MoveLeft, MoveRight } from 'lucide-react'
+import { useResumeContext } from '@/context/context'
 
 const SummaryForm = () => {
+    const {setActiveFormIndex} = useResumeContext();
+
     // 1. Define your form.
     const form = useForm<z.infer<typeof SummaryFormSchema>>({
       resolver: zodResolver(SummaryFormSchema),
@@ -27,6 +30,7 @@ const SummaryForm = () => {
    
     // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof SummaryFormSchema>) {
+      setActiveFormIndex((i:number) => i+1)
       // Do something with the form values.
       // ✅ This will be type-safe and validated.
       console.log(values)
@@ -54,7 +58,7 @@ const SummaryForm = () => {
           )}
         />
         <div className='grid grid-cols-2 gap-3'>
-          <Button className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
+          <Button onClick={() => setActiveFormIndex((i: number) => i-1)} className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
           <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button>
         </div>
       </form>

@@ -4,16 +4,17 @@ import Summary from '../resume-preview/Summary'
 import ProfessionalExp from '../resume-preview/ProfessionalExp'
 import Educational from '../resume-preview/Educational'
 import Skill from '../resume-preview/Skill'
-import dummyData from '@/data/dummyData'
+import { useResumeContext } from '@/context/context'
 
 const ResumePreview = () => {
+  const {formPreview} = useResumeContext();
   return (
     <div className='shadow-lg h-full p-14'>
-      <PersonalDetail personalDetail={dummyData.personalDetail}/>
-      <Summary summary={dummyData.summary}/>
-      <ProfessionalExp experience={dummyData.experience}/>
-      <Educational education={dummyData.education}/>
-      <Skill skills={dummyData.skills}/>
+      <PersonalDetail personalDetail={formPreview.personalDetail}/>
+      <Summary summary={formPreview.summary}/>
+      <ProfessionalExp experience={formPreview.experience}/>
+      <Educational education={formPreview.education}/>
+      <Skill skills={formPreview.skills}/>
     </div>
   )
 }

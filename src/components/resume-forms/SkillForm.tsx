@@ -8,8 +8,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import { z } from 'zod'
 import { it } from 'node:test'
+import { useResumeContext } from '@/context/context'
 
 const SkillForm = () => {
+
+  const {setActiveFormIndex} = useResumeContext();
 
   const formSchema = z.object({
     skills: z.array(SkillsFormSchema),
@@ -32,6 +35,7 @@ const SkillForm = () => {
  
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    alert("Your Form is submitted")
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
@@ -64,7 +68,7 @@ const SkillForm = () => {
                           <Input placeholder="React JS" {...field} />
                         </FormControl>
                         <FormDescription>
-                          Add your skills here and rate it
+                        List your skills and rate your proficiency to highlight your expertise.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -78,15 +82,15 @@ const SkillForm = () => {
                         <FormControl>
                           <Input className='w-4/5' defaultValue={10} type='range' step={5} min={0} max={100} {...field} />
                         </FormControl>
-                        {field.value}
                         <FormMessage />
+                        {field.value}
                       </FormItem>
                     )}
                   />
                   {i === 0 ? <>
-                    <Button className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
+                    <Button onClick={() => setActiveFormIndex((i: number) => i-1)} className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
                     <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button></>
-                    : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Delete</Button>
+                    : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Remove</Button>
                   }
                 </form>
               </Form>

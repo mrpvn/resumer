@@ -8,9 +8,12 @@ import { z } from 'zod';
 import { Button } from '../ui/button';
 import { CirclePlus, MoveLeft, MoveRight } from 'lucide-react';
 import { Textarea } from '../ui/textarea';
+import { useResumeContext } from '@/context/context';
 
 
 const EducationalForm = () => {
+  const {setActiveFormIndex} = useResumeContext();
+
   const formSchema = z.object({
     academics: z.array(EducationFormSchema),
   });
@@ -31,6 +34,7 @@ const EducationalForm = () => {
   
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    setActiveFormIndex((i:number) => i+1)
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
@@ -133,9 +137,9 @@ const EducationalForm = () => {
                         )}
                       />
                       {i === 0 ? <>
-                        <Button className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
+                        <Button onClick={() => setActiveFormIndex((i: number) => i-1)} className="flex gap-1" type="button"><MoveLeft size={20}/> Prev</Button>
                         <Button className="flex gap-1" type="submit">Next <MoveRight size={20} /></Button></>
-                        : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Delete</Button>
+                        : <Button className='col-span-2' onClick={() => remove(i)} variant='destructive' type='button'>Remove</Button>
                       }
                     </form>
                   </Form>
