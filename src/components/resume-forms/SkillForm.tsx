@@ -75,8 +75,8 @@ const SkillForm = () => {
     <div className='p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4'>
       <div className='flex justify-between items-center'>
         <div>
-          <h2 className='font-bold text-lg'>Skills</h2>
-          <p>Add your professional skills</p>
+          <h2 className='font-bold text-lg'>Add Skills</h2>
+          <p>List your skills and rate your proficiency to highlight your expertise</p>
         </div>
         <CirclePlus onClick={addNewForm} size={36} className='cursor-pointer hover:scale-90 transition-all' absoluteStrokeWidth />
       </div>
@@ -91,13 +91,13 @@ const SkillForm = () => {
                     name={`skills.${i}.name`}
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Skill</FormLabel>
+                        {/* <FormLabel>Skill</FormLabel> */}
                         <FormControl>
                           <Input placeholder="React JS" {...field} onChange={(e) => handleFieldChange(e, field, i)}/>
                         </FormControl>
-                        <FormDescription>
-                        List your skills and rate your proficiency to highlight your expertise.
-                        </FormDescription>
+                        {/* <FormDescription>
+                          List your skills and rate your proficiency to highlight your expertise.
+                        </FormDescription> */}
                         <FormMessage />
                       </FormItem>
                     )}

@@ -15,8 +15,7 @@ const Skill: React.FC<SkillProps> = ({skills}) => {
             <h2 className={`font-bold text-sm`}>{skill.name}</h2>
             <div className='flex items-center justify-center gap-1'>
               <div className='h-3 bg-primary-foreground w-[120px] rounded-md'>
-                  <div className={`h-3 bg-primary w-[${skill.rating}%] rounded-md`}>
-                    
+                  <div className={`h-3 bg-primary rounded-md`} style={{ width: `${skill.rating}%` }}>
                   </div>
               </div>
               <p className='text-xs'>{skill.rating}%</p>
