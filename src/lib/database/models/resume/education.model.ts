@@ -19,7 +19,7 @@ export interface IEducatonType extends Document {
 export const IndividualEducationSchema: Schema<IIndividualEducationType> = new Schema({
   createdBy:{
     type: Schema.Types.ObjectId,
-    ref: "PersonalDetail",
+    ref: "User",
     required: true
   },
   universityName: {
@@ -52,6 +52,6 @@ export const EducationSchema:Schema<IEducatonType> = new Schema({
   education: [IndividualEducationSchema],
 }, { timestamps: true });
 
-const Education = models?.User || model('User', EducationSchema);
+const Education = models?.Education || model('User', EducationSchema);
 
 export default Education;

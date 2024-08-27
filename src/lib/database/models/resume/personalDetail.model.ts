@@ -1,7 +1,7 @@
-import {model, models, Schema} from "mongoose";
+import {model, models, Schema, Types} from "mongoose";
 
 export interface IPersonalDetail extends Document {
-  clerkId: string;
+  createdBy: Types.ObjectId;
   firstName: string;
   lastName?: string;
   jobTitle: string;
@@ -13,10 +13,10 @@ export interface IPersonalDetail extends Document {
 }
 
 export const PersonalDetailSchema: Schema<IPersonalDetail> = new Schema({
-  clerkId: {
-    type: String,
-    required: true,
-    unique: true
+  createdBy:{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
   },
   firstName: {
     type: String,

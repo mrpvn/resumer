@@ -10,7 +10,7 @@ export interface ISummary extends Document {
 export const SummarySchema: Schema<ISummary> = new Schema({
   createdBy: {
     type: Schema.Types.ObjectId,
-    ref: "PersonalDetail",
+    ref: "User",
     required: true
   },
   summary: {
@@ -19,6 +19,6 @@ export const SummarySchema: Schema<ISummary> = new Schema({
   }
 }, {timestamps: true})
 
-const Summary = models?.PersonalDetail || model('Summary', SummarySchema)
+const Summary = models?.Summary || model('Summary', SummarySchema)
 
 export default Summary;

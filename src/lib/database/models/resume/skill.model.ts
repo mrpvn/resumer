@@ -13,6 +13,11 @@ export interface ISkillType extends Document {
 }
 
 export const IndividualSkillSchema: Schema<IIndividualSkillType> = new Schema({
+  createdBy:{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
   name: {
     type: String,
     required: true
@@ -27,6 +32,6 @@ export const SkillSchema: Schema<ISkillType> = new Schema({
   skills: [IndividualSkillSchema],
 }, { timestamps: true });
 
-const Skill = models?.User || model('Skill', SkillSchema);
+const Skill = models?.Skill || model('Skill', SkillSchema);
 
 export default Skill;

@@ -21,7 +21,7 @@ export interface IExperienceType extends Document {
 export const IndividualExperienceSchema: Schema<IIndividualExperienceType> = new Schema({
   createdBy:{
     type: Schema.Types.ObjectId,
-    ref: "PersonalDetail",
+    ref: "User",
     required: true
   },
   title: {

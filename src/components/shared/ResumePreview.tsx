@@ -8,7 +8,6 @@ import { useResumeContext } from '@/context/context'
 
 const ResumePreview = () => {
   const {formPreview} = useResumeContext();
-  console.log("Form Preview: ", formPreview)
   return (
     <div className='shadow-lg h-full p-14'>
       <PersonalDetail personalDetail={formPreview.personalDetail}/>
