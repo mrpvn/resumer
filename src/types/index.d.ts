@@ -110,3 +110,13 @@ interface ResumeContextType {
   setFormPreview: Dispatch<SetStateAction<FormPreviewType>>;
 }
 
+// ====================================USER TYPES
+
+interface UserType {
+  clerkId: string;
+  email: string;
+  firstName: string | null; 
+  lastName: string | null;
+  photo: string
+}
+

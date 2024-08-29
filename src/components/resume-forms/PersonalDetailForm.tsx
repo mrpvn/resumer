@@ -24,9 +24,16 @@ const PersonalDetailForm = () => {
       },
     })
    
-    function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
+    async function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
       setActiveFormIndex((i:number) => i+1)
-      console.log(values)
+      const response = await fetch(`/api/resume`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+      console.log(values);
     }
 
     function handleFieldChange(e:React.ChangeEvent<HTMLInputElement>, field: any){

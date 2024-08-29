@@ -1,4 +1,4 @@
-import { Schema, model, models } from 'mongoose';
+import { Schema, Types, model, models } from 'mongoose';
 import { IPersonalDetail, PersonalDetailSchema } from './personalDetail.model';
 import { IIndividualEducationType, IndividualEducationSchema } from './education.model';
 import { IIndividualSkillType, IndividualSkillSchema } from './skill.model';
@@ -6,6 +6,7 @@ import { ISummary, SummarySchema } from './summary.model';
 import { IIndividualExperienceType, IndividualExperienceSchema } from './experience.model';
 
 export interface IResume extends Document {
+  createdBy: Types.ObjectId;
   personalDetail: IPersonalDetail;
   summary: ISummary;
   experiences: IIndividualExperienceType[];
@@ -16,6 +17,11 @@ export interface IResume extends Document {
 }
 
 const ResumeSchema: Schema<IResume> = new Schema({
+  createdBy:{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
   personalDetail: PersonalDetailSchema,
   summary: SummarySchema,
   experiences: [IndividualExperienceSchema],
