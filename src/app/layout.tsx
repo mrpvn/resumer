@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
-import { dark, neobrutalism } from "@clerk/themes";
+import { dark } from "@clerk/themes";
 import Header from "@/components/shared/Header";
+import TanstackProvider from "@/poviders/TanstackProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +27,12 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={inter.className}>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-            <Header/>
-            {children}
-          </ThemeProvider>
+          <TanstackProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+              <Header/>
+              {children}
+            </ThemeProvider>
+          </TanstackProvider>
         </body>
       </html>
     </ClerkProvider>

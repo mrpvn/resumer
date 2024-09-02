@@ -4,9 +4,8 @@ type PersonalDetailProps = {
     lastName: string;
     jobTitle: string;
     address: string;
-    phone: number;
+    phone: string;
     email: string;
-    themeColor: string;
   };
 };
 
@@ -55,12 +54,11 @@ type SkillProps = {
 
 interface PersonalDetail {
   firstName: string;
-  lastName: string;
+  lastName?: string;
   jobTitle: string;
   address: string;
-  phone: number;
+  phone: string;
   email: string;
-  themeColor: string;
 }
 
 interface Summary {

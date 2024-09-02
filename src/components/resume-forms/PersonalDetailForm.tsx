@@ -2,15 +2,19 @@ import { z } from "zod"
 import React from 'react'
 import { Input } from '../ui/input'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ControllerRenderProps, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { PersonalDetailFormSchema } from '@/lib/form-validation'
 import { Button } from "../ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import { MoveLeft, MoveRight } from "lucide-react"
 import { useResumeContext } from "@/context/context"
+import { CreateResumeField } from "@/services/api.svc"
+import { useClerk, useAuth } from "@clerk/nextjs"
 
 const PersonalDetailForm = () => {
-    const {activeFormIndex, setActiveFormIndex, setFormPreview, formPreview} = useResumeContext();
+    const {activeFormIndex, setActiveFormIndex, setFormPreview, } = useResumeContext();
+
+    const {userId} = useAuth();
 
     const form = useForm<z.infer<typeof PersonalDetailFormSchema>>({
       resolver: zodResolver(PersonalDetailFormSchema),
@@ -26,14 +30,9 @@ const PersonalDetailForm = () => {
    
     async function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
       setActiveFormIndex((i:number) => i+1)
-      const response = await fetch(`/api/resume`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
-      console.log(values);
+      const payload = {...values, createdBy: userId};
+      const personalData = await CreateResumeField(payload);
+      console.log("Personal data: ", personalData)
     }
 
     function handleFieldChange(e:React.ChangeEvent<HTMLInputElement>, field: any){
