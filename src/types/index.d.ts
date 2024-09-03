@@ -118,3 +118,13 @@ interface UserType {
   photo: string
 }
 
+// =============================================
+
+interface CreateNewResumeType {
+  title: string;
+  resumeId: string;
+  userName: string;
+  userEmail: string;
+
+}
+

@@ -1,32 +1,34 @@
-import { Schema, Types, model, models } from 'mongoose';
-import { IPersonalDetail, PersonalDetailSchema } from './personalDetail.model';
-import { IIndividualEducationType, IndividualEducationSchema } from './education.model';
-import { IIndividualSkillType, IndividualSkillSchema } from './skill.model';
-import { ISummary, SummarySchema } from './summary.model';
-import { IIndividualExperienceType, IndividualExperienceSchema } from './experience.model';
+import { Schema, model, models } from 'mongoose';
+
 
 export interface IResume extends Document {
-  createdBy: Types.ObjectId;
-  personalDetail: IPersonalDetail;
-  summary: ISummary;
-  experiences: IIndividualExperienceType[];
-  education: IIndividualEducationType[];
-  skills: IIndividualSkillType[];
+  title: string;
+  resumeId: string;
+  userName: string;
+  userEmail: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const ResumeSchema: Schema<IResume> = new Schema({
-  createdBy:{
-    type: Schema.Types.ObjectId,
-    ref: "User",
+  title: {
+    type: String,
     required: true
   },
-  personalDetail: PersonalDetailSchema,
-  summary: SummarySchema,
-  experiences: [IndividualExperienceSchema],
-  education: [IndividualEducationSchema],
-  skills: [IndividualSkillSchema],
+  resumeId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  userName: {
+    type: String,
+    required: true
+  },
+  userEmail: {
+    type: String,
+    required: true,
+    unique: true
+  }
 }, { timestamps: true });
 
 const Resume = models?.Resume || model('Resume', ResumeSchema);

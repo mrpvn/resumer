@@ -6,13 +6,46 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { v4 as uuidv4 } from 'uuid';
+import { useUser } from "@clerk/nextjs";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CreateNewResume } from "@/services/api.svc";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const AddResume = () => {
   const [resumeTitle, setResumeTitle] = useState<string | null>("");
-  const [loading, setLoading] = useState(false);
+  const [uuid, setUuid] = useState<string | null>("");
+  const {user} = useUser();
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+  const router = useRouter();
 
+  const mutation = useMutation({
+    mutationFn: CreateNewResume,
+    onSuccess: () => {
+      // Invalidate and refetch queries on success (optional)
+      queryClient.invalidateQueries(['resumes']);
+      toast({
+        description: "Your resume has been created successfully!",
+      })
+      router.push(`/dashboard/resume/${uuid}/edit`);
+    },
+    onError: (error: any) => {
+      console.error('Error creating resume:', error)
+    }
+  });
+  
   const handleSubmit = () => {
-    alert("Fix it soon")
+    const uniqueId = uuidv4();
+    setUuid(uniqueId);
+    const newResumeData = {
+      title: resumeTitle || "",
+      resumeId: uniqueId,
+      userName: user?.fullName || "",
+      userEmail: user?.primaryEmailAddress?.emailAddress || ""
+    }
+    mutation.mutate(newResumeData);
   };
 
   return (
@@ -46,10 +79,10 @@ const AddResume = () => {
                 </Button>
               </DialogClose>
               <Button
-                disabled={!resumeTitle || loading}
+                disabled={!resumeTitle || mutation.isPending}
                 onClick={() => handleSubmit()}
               >
-                {loading ? (
+                {mutation.isPending ? (
                   <LoaderCircle className="animate-spin mx-2" />
                 ) : (
                   "Create"

@@ -1,20 +1,28 @@
 import { z } from "zod"
-import React from 'react'
+import React, { useState } from 'react'
 import { Input } from '../ui/input'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { PersonalDetailFormSchema } from '@/lib/form-validation'
 import { Button } from "../ui/button"
-import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { MoveLeft, MoveRight } from "lucide-react"
 import { useResumeContext } from "@/context/context"
-import { CreateResumeField } from "@/services/api.svc"
-import { useClerk, useAuth } from "@clerk/nextjs"
+import { CreateResumeField, GetResumeField } from "@/services/api.svc"
+import { useAuth } from "@clerk/nextjs"
+import { useQuery } from "@tanstack/react-query"
 
 const PersonalDetailForm = () => {
     const {activeFormIndex, setActiveFormIndex, setFormPreview, } = useResumeContext();
 
     const {userId} = useAuth();
+
+    const {data: fieldData} = useQuery({
+      queryKey: ["personalDetail"],
+      queryFn: () => {
+        GetResumeField(userId as string)
+      }
+    })
 
     const form = useForm<z.infer<typeof PersonalDetailFormSchema>>({
       resolver: zodResolver(PersonalDetailFormSchema),
@@ -32,7 +40,6 @@ const PersonalDetailForm = () => {
       setActiveFormIndex((i:number) => i+1)
       const payload = {...values, createdBy: userId};
       const personalData = await CreateResumeField(payload);
-      console.log("Personal data: ", personalData)
     }
 
     function handleFieldChange(e:React.ChangeEvent<HTMLInputElement>, field: any){
@@ -61,7 +68,7 @@ const PersonalDetailForm = () => {
                 <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Jhon" {...field} onChange={(e) => handleFieldChange(e, field)}
+                    placeholder="Jhon" {...field} onChange={(e) => handleFieldChange(e, field)} 
                   />
                 </FormControl>
                 <FormMessage />
