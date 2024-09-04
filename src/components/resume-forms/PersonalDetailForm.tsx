@@ -8,21 +8,36 @@ import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { MoveLeft, MoveRight } from "lucide-react"
 import { useResumeContext } from "@/context/context"
-import { CreateResumeField, GetResumeField } from "@/services/api.svc"
 import { useAuth } from "@clerk/nextjs"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { UpdateResume } from "@/services/api.svc"
+import { useParams } from "next/navigation"
+import { useToast } from "@/hooks/use-toast"
 
 const PersonalDetailForm = () => {
-    const {activeFormIndex, setActiveFormIndex, setFormPreview, } = useResumeContext();
+  const {activeFormIndex, setActiveFormIndex, setFormPreview, } = useResumeContext();
+  const params = useParams();
+  const { id } = params;
+  const {toast} = useToast();
 
     const {userId} = useAuth();
 
-    const {data: fieldData} = useQuery({
-      queryKey: ["personalDetail"],
-      queryFn: () => {
-        GetResumeField(userId as string)
+    const mutation = useMutation({
+      mutationFn: UpdateResume,
+      onSuccess: () => {
+        // Invalidate and refetch queries on success (optional)
+        // queryClient.invalidateQueries(['resumes']);
+        toast({
+          description: "Personal details has been updated successfully!",
+        })
+      },
+      onError: (error: any) => {
+        toast({
+          variant: "destructive",
+          description: "Personal detail update failed!",
+        })
       }
-    })
+    });
 
     const form = useForm<z.infer<typeof PersonalDetailFormSchema>>({
       resolver: zodResolver(PersonalDetailFormSchema),
@@ -37,9 +52,8 @@ const PersonalDetailForm = () => {
     })
    
     async function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
-      setActiveFormIndex((i:number) => i+1)
-      const payload = {...values, createdBy: userId};
-      const personalData = await CreateResumeField(payload);
+      setActiveFormIndex((i:number) => i+1);
+      mutation.mutate({values, id});
     }
 
     function handleFieldChange(e:React.ChangeEvent<HTMLInputElement>, field: any){

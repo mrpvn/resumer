@@ -6,6 +6,12 @@ export interface IResume extends Document {
   resumeId: string;
   userName: string;
   userEmail: string;
+  firstName: string;
+  lastName: string;
+  jobTitle: string;
+  address: string;
+  phone: string;
+  email: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,8 +33,14 @@ const ResumeSchema: Schema<IResume> = new Schema({
   userEmail: {
     type: String,
     required: true,
-    unique: true
-  }
+  },
+  firstName: {type: String},
+  lastName: {type: String},
+  jobTitle: {type: String},
+  address: {type: String},
+  phone: {type: String},
+  email: {type: String}
+
 }, { timestamps: true });
 
 const Resume = models?.Resume || model('Resume', ResumeSchema);

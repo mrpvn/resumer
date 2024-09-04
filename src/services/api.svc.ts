@@ -24,6 +24,11 @@ const GetResumeList = async (userEmail: string) => {
   return response.data;
 }
 
+const UpdateResume = async ({values, id}: { values: any, id: string | string[] }) => {
+  const response = await axiosClient.put(`/api/resume/${id}`, values)
+  return response.data;
+}
+
 
 // const CreateUser = async (userData: UserType) => {
 //   const newUser = await fetch(`${API_BASE_URL}/api/user`, {
@@ -58,5 +63,6 @@ export {
   // CreateResumeField,
   // GetResumeField,
   CreateNewResume,
-  GetResumeList
+  GetResumeList,
+  UpdateResume
 }
