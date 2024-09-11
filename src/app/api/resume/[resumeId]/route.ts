@@ -38,3 +38,18 @@ export async function PUT(req: Request, { params }: { params: { resumeId: string
     return NextResponse.json({error}, {status: 500})
   }
 }
+
+export async function DELETE(req: Request, {params}: {params: { resumeId: string }}) {
+  const { resumeId } = params;
+  try {
+    await connectToDatabase();
+    const deletedResume = await Resume.findOneAndDelete({resumeId});
+
+    if(!deletedResume) return NextResponse.json({"message": "Some error occur while deleting the resume."}, {status: 200});
+
+    return NextResponse.json(deletedResume, {status: 200});
+
+  } catch (error) {
+    return NextResponse.json({error}, {status: 500})
+  }
+}

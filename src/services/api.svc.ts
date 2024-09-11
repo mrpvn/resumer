@@ -35,9 +35,15 @@ const UpdateResume = async ({values, id}: { values: any, id: string | string[] }
   return response.data;
 }
 
+const DeleteResume = async (id: string) => {
+  const response = await axiosClient.delete(`/api/resume/${id}`)
+  return response.data
+}
+
 export {
   CreateNewResume,
   GetResumeList,
   GetSingleResume,
-  UpdateResume
+  UpdateResume,
+  DeleteResume
 }

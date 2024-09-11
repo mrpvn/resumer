@@ -2,30 +2,51 @@
 
 import React from 'react'
 import AddResume from '@/components/shared/AddResume';
-import { GetResumeList } from '@/services/api.svc';
+import { GetResumeList, DeleteResume } from '@/services/api.svc';
 import { useUser } from '@clerk/nextjs';
-import { useQuery } from '@tanstack/react-query';
+import { QueryClient, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { Eye, FileDown, Pencil, Trash2 } from 'lucide-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { useToast } from '@/hooks/use-toast';
 
 
 const Dashboard = () => {
 const router = useRouter();
+const queryClient = useQueryClient();
 const {user} = useUser();
+const {toast} = useToast();
+
 const {data: resumes} = useQuery({
   queryKey: ["resumes", user?.primaryEmailAddress?.emailAddress],
   queryFn: GetResumeList,
   enabled: !!user?.primaryEmailAddress?.emailAddress,
 })
 
+const mutation = useMutation({
+  mutationFn: DeleteResume,
+  onSuccess: () => {
+    // Invalidate and refetch queries on success (optional)
+    queryClient.invalidateQueries(['resumes']);
+    toast({
+      description: "Resume deleted sucessfully!",
+    })
+  },
+  onError: (error: any) => {
+    toast({
+      variant: "destructive",
+      description: "Personal detail update failed!",
+    })
+  }
+});
+
 const handleEditResume = (resumeId: string) => {
   router.push(`/dashboard/resume/${resumeId}/edit`);
 }
 
 const handleDeleteResume = (resumeId: string) => {
-  
+  mutation.mutate(resumeId);
 }
 
   return (
