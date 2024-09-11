@@ -1,5 +1,5 @@
 import { z } from "zod"
-import React, { useState } from 'react'
+import React from 'react'
 import { Input } from '../ui/input'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -8,8 +8,7 @@ import { Button } from "../ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { MoveLeft, MoveRight } from "lucide-react"
 import { useResumeContext } from "@/context/context"
-import { useAuth } from "@clerk/nextjs"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation } from "@tanstack/react-query"
 import { UpdateResume } from "@/services/api.svc"
 import { useParams } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
@@ -20,13 +19,12 @@ const PersonalDetailForm = () => {
   const { id } = params;
   const {toast} = useToast();
 
-    const {userId} = useAuth();
-
     const mutation = useMutation({
       mutationFn: UpdateResume,
       onSuccess: () => {
         // Invalidate and refetch queries on success (optional)
         // queryClient.invalidateQueries(['resumes']);
+        setActiveFormIndex((i:number) => i+1);
         toast({
           description: "Personal details has been updated successfully!",
         })
@@ -52,7 +50,6 @@ const PersonalDetailForm = () => {
     })
    
     async function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
-      setActiveFormIndex((i:number) => i+1);
       mutation.mutate({values, id});
     }
 

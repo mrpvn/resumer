@@ -4,7 +4,7 @@ const dummyData = {
         lastName:'Carter',
         jobTitle:'full stack developer',
         address:'525 N tryon Street, NC 28117',
-        phone:123456789,
+        phone:"123456789",
         email:'exmaple@gmail.com',
         themeColor:"#ff6666",
     },
@@ -13,7 +13,7 @@ const dummyData = {
     },
     experience:[
       {
-          id:1,
+          id:"1",
           title:'Full Stack Developer',
           companyName:'Amazon',
           city:'New York',
@@ -29,7 +29,7 @@ const dummyData = {
           'and back-end systems.'
       },
       {
-          id:2,
+          id:"2",
           title:'Frontend Developer',
           companyName:'Google',
           city:'Charlotte',
@@ -45,9 +45,9 @@ const dummyData = {
           'and back-end systems.'
       }
     ],
-    education:[
+    academics:[
       {
-          id:1,
+          id:"1",
           universityName:'Western Illinois University',
           startDate:'Aug 2018',
           endDate:'Dec 2019',
@@ -56,7 +56,7 @@ const dummyData = {
           description:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud'
       },
       {
-          id:2,
+          id:"2",
           universityName:'Western Illinois University',
           startDate:'Aug 2018',
           endDate:'Dec 2019',
@@ -67,24 +67,24 @@ const dummyData = {
     ],
     skills:[
       {
-          id:1,
+          id:"1",
           name:'Angular',
-          rating:80,
+          rating:"80",
       },
       {
-          id:2,
+          id:"2",
           name:'React',
-          rating:75,
+          rating:"75",
       },
       {
-          id:3,
+          id:"3",
           name:'MySql',
-          rating:90,
+          rating:"90",
       },
       {
-          id:4,
+          id:"4",
           name:'React Native',
-          rating:95,
+          rating:"95",
       }
     ]
 }

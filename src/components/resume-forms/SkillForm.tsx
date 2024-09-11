@@ -8,10 +8,34 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form"
 import { z } from 'zod'
 import { useResumeContext } from '@/context/context'
+import { useParams } from 'next/navigation'
+import { useToast } from '@/hooks/use-toast'
+import { useMutation } from '@tanstack/react-query'
+import { UpdateResume } from '@/services/api.svc'
 
 const SkillForm = () => {
 
   const {setActiveFormIndex, setFormPreview} = useResumeContext();
+  const params = useParams();
+  const { id } = params;
+  const {toast} = useToast();
+
+    const mutation = useMutation({
+      mutationFn: UpdateResume,
+      onSuccess: () => {
+        // Invalidate and refetch queries on success (optional)
+        // queryClient.invalidateQueries(['resumes']);
+        toast({
+          description: "Skill has been updated successfully!",
+        })
+      },
+      onError: (error: any) => {
+        toast({
+          variant: "destructive",
+          description: "Skill detail update failed!",
+        })
+      }
+    });
 
   const formSchema = z.object({
     skills: z.array(SkillsFormSchema),
@@ -32,12 +56,8 @@ const SkillForm = () => {
     name: "skills",
   });
  
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    alert("Your Form is submitted")
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    mutation.mutate({values, id});
   }
 
   function handleFieldChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: any, index: number){

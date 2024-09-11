@@ -1,7 +1,7 @@
 type PersonalDetailProps = {
   personalDetail: {
     firstName: string;
-    lastName: string;
+    lastName?: string;
     jobTitle: string;
     address: string;
     phone: string;
@@ -18,7 +18,7 @@ type SummaryProps = {
 type ExperienceProps = {
   experience:
     {
-    id: number;
+    id: string;
     title: string;
     companyName: string;
     city: string;
@@ -30,9 +30,9 @@ type ExperienceProps = {
   }[]
 };
 
-type EducationProps = {
-  education: {
-    id: number;
+type AcademicsProps = {
+  academics: {
+    id: string;
     universityName: string;
     startDate: string;
     endDate: string;
@@ -44,9 +44,9 @@ type EducationProps = {
 
 type SkillProps = {
   skills:{
-    id: number;
+    id: string;
     name: string;
-    rating: number;
+    rating: string;
   }[]
 };
 
@@ -66,7 +66,7 @@ interface Summary {
 }
 
 interface Experience {
-  id: number;
+  id: string;
   title: string;
   companyName: string;
   city: string;
@@ -77,8 +77,8 @@ interface Experience {
   workSummary: string;
 }
 
-interface Education {
-  id: number;
+interface Academics {
+  id: string;
   universityName: string;
   startDate: string;
   endDate: string;
@@ -88,16 +88,16 @@ interface Education {
 }
 
 interface Skill {
-  id: number;
+  id: string;
   name: string;
-  rating: number;
+  rating: string;
 }
 
 interface FormPreviewType {
   personalDetail: PersonalDetail;
   summary: Summary;
   experience: Experience[];
-  education: Education[];
+  academics: Academics[];
   skills: Skill[];
 }
 

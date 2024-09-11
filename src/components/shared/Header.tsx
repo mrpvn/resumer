@@ -12,7 +12,9 @@ const Header = () => {
 
   return (
     <div className="flex px-4 py-2 justify-between shadow-md">
-      <Image src="/logo.svg" width={50} height={50} alt="Logo" />
+      <Link href={"/"}>
+        <Image src="/logo.svg" width={50} height={50} alt="Logo" />
+      </Link>
       {isSignedIn ? (
         <span className="flex gap-4 items-center justify-center">
           <Link href={"/dashboard"}>

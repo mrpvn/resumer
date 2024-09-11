@@ -24,45 +24,20 @@ const GetResumeList = async (userEmail: string) => {
   return response.data;
 }
 
+const GetSingleResume = async (id: string) => {
+  const resumeId = id?.queryKey[1]
+  const response = await axiosClient.get(`/api/resume/${resumeId}`);
+  return response.data;
+}
+
 const UpdateResume = async ({values, id}: { values: any, id: string | string[] }) => {
   const response = await axiosClient.put(`/api/resume/${id}`, values)
   return response.data;
 }
 
-
-// const CreateUser = async (userData: UserType) => {
-//   const newUser = await fetch(`${API_BASE_URL}/api/user`, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify(userData)
-//   });
-//   return newUser.json();
-// }
-
-
-// const CreateResumeField = async (formData: PersonalDetail) => {
-//   const resumeData = await fetch(`${API_BASE_URL}/api/resume`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(formData)
-//   });
-//   return resumeData.json();
-// }
-
-// const GetResumeField = async (id: string) => {
-//   const resumeData = await fetch(`${API_BASE_URL}/api/field/${id}`);
-//   return resumeData.json();
-// }
-
 export {
-  // CreateUser,
-  // CreateResumeField,
-  // GetResumeField,
   CreateNewResume,
   GetResumeList,
+  GetSingleResume,
   UpdateResume
 }

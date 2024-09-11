@@ -1,7 +1,23 @@
 import Resume from "@/lib/database/models/resume/resume.model";
 import connectToDatabase from "@/lib/database/mongoose";
-import { UpdateResume } from "@/services/api.svc";
 import { NextResponse } from "next/server";
+
+export async function GET(req: Request, { params }: { params: { resumeId: string } }) {
+
+  const {resumeId} = params;
+
+  try {
+    await connectToDatabase();
+    const resume = await Resume.findOne({resumeId});
+
+    if(!resume) return NextResponse.json({"message": "No resume found!"}, {status: 200});
+
+    return NextResponse.json(resume, {status: 200});
+
+  } catch (error) {
+    return NextResponse.json({error}, {status: 500})
+  }
+}
 
 export async function PUT(req: Request, { params }: { params: { resumeId: string } }) {
   const { resumeId } = params;

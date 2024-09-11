@@ -9,16 +9,40 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from '../ui/textarea';
 import { CirclePlus, MoveLeft, MoveRight } from 'lucide-react';
 import { useResumeContext } from '@/context/context';
+import { useParams } from 'next/navigation';
+import { useToast } from '@/hooks/use-toast';
+import { UpdateResume } from '@/services/api.svc';
+import { useMutation } from '@tanstack/react-query';
 
 const ExperienceForm = () => {
 
   const {setActiveFormIndex, setFormPreview} = useResumeContext()
+  const params = useParams();
+  const { id } = params;
+  const {toast} = useToast();
+
+    const mutation = useMutation({
+      mutationFn: UpdateResume,
+      onSuccess: () => {
+        // Invalidate and refetch queries on success (optional)
+        // queryClient.invalidateQueries(['resumes']);
+        setActiveFormIndex((i:number) => i+1)
+        toast({
+          description: "Experience has been updated successfully!",
+        })
+      },
+      onError: (error: any) => {
+        toast({
+          variant: "destructive",
+          description: "Experience detail update failed!",
+        })
+      }
+    });
 
   const formSchema = z.object({
     experiences: z.array(ExperienceFormSchema),
   });
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -32,12 +56,8 @@ const ExperienceForm = () => {
     name: "experiences",
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setActiveFormIndex((i:number) => i+1)
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+    mutation.mutate({values, id});
   }
 
   function handleFieldChange(e:React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, field: any, index: number){

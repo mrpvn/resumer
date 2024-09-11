@@ -16,12 +16,35 @@ import {
 } from "@/components/ui/form"
 import { MoveLeft, MoveRight } from 'lucide-react'
 import { useResumeContext } from '@/context/context'
-import { Input } from '../ui/input'
+import { useMutation } from '@tanstack/react-query'
+import { UpdateResume } from '@/services/api.svc'
+import { useParams } from 'next/navigation'
+import { useToast } from '@/hooks/use-toast'
 
 const SummaryForm = () => {
     const {setActiveFormIndex, setFormPreview} = useResumeContext();
+    const params = useParams();
+    const { id } = params;
+    const {toast} = useToast();
 
-    // 1. Define your form.
+    const mutation = useMutation({
+      mutationFn: UpdateResume,
+      onSuccess: () => {
+        // Invalidate and refetch queries on success (optional)
+        // queryClient.invalidateQueries(['resumes']);
+        setActiveFormIndex((i:number) => i+1)
+        toast({
+          description: "Summary has been updated successfully!",
+        })
+      },
+      onError: (error: any) => {
+        toast({
+          variant: "destructive",
+          description: "Summary update failed!",
+        })
+      }
+    });
+
     const form = useForm<z.infer<typeof SummaryFormSchema>>({
       resolver: zodResolver(SummaryFormSchema),
       defaultValues: {
@@ -29,12 +52,8 @@ const SummaryForm = () => {
       },
     })
    
-    // 2. Define a submit handler.
     function onSubmit(values: z.infer<typeof SummaryFormSchema>) {
-      setActiveFormIndex((i:number) => i+1)
-      // Do something with the form values.
-      // ✅ This will be type-safe and validated.
-      console.log(values)
+      mutation.mutate({values, id});
     }
 
     function handleFieldChange(e:React.ChangeEvent<HTMLTextAreaElement>, field: any){
