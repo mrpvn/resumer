@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Textarea } from '../ui/textarea'
 import { SummaryFormSchema } from '@/lib/form-validation'
 import { useForm } from 'react-hook-form'
@@ -20,8 +20,9 @@ import { useMutation } from '@tanstack/react-query'
 import { UpdateResume } from '@/services/api.svc'
 import { useParams } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
+import Resume from '@/lib/database/models/resume/resume.model'
 
-const SummaryForm = () => {
+const SummaryForm = ({resume}:{resume:any}) => {
     const {setActiveFormIndex, setFormPreview} = useResumeContext();
     const params = useParams();
     const { id } = params;
@@ -51,6 +52,16 @@ const SummaryForm = () => {
         summary: "",
       },
     })
+
+    const {reset} = form
+
+    useEffect(() => {
+      if (resume) {
+        reset({
+          summary: resume?.summary
+        });
+      }
+    }, [resume])
    
     function onSubmit(values: z.infer<typeof SummaryFormSchema>) {
       mutation.mutate({values, id});

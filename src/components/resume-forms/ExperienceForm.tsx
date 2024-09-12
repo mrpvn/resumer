@@ -1,7 +1,7 @@
 import { ExperienceFormSchema } from '@/lib/form-validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useState } from 'react'
-import { useFieldArray, useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react'
+import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
@@ -14,7 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 import { UpdateResume } from '@/services/api.svc';
 import { useMutation } from '@tanstack/react-query';
 
-const ExperienceForm = () => {
+const ExperienceForm = ({resume}:{resume:any}) => {
 
   const {setActiveFormIndex, setFormPreview} = useResumeContext()
   const params = useParams();
@@ -47,14 +47,25 @@ const ExperienceForm = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       experiences: [{ title: '', companyName: '', city: '', state: '', startDate: '', endDate: '', workSummary: '' }],
-    }
+    },
   })
-  const { control } = form;
+
+  const { control, reset } = form;
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "experiences",
   });
+
+  useEffect(() => {
+    if (resume?.experiences && Array.isArray(resume.experiences)) {
+      reset({
+        experiences: resume.experiences.length
+          ? resume.experiences
+          : [{ title: '', companyName: '', city: '', state: '', startDate: '', endDate: '', workSummary: '' }],
+      });
+    }
+  }, [resume, reset]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     mutation.mutate({values, id});

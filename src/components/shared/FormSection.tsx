@@ -8,18 +8,19 @@ import { Button } from '../ui/button'
 import { LayoutGrid } from 'lucide-react'
 import { useResumeContext } from '@/context/context'
 
-const FormSection = () => {
+const FormSection = ({resume} : {resume: any}) => {
   const {activeFormIndex} = useResumeContext();
+
   return (
     <div>
       <div className="flex justify-between items-center">
         <Button variant="outline" size="sm" className="flex gap-2"><LayoutGrid/>Theme</Button>
       </div>
-      {activeFormIndex === 1 && <PersonalDetailForm/>}
-      {activeFormIndex === 2 && <SummaryForm/>}
-      {activeFormIndex === 3 && <ExperienceForm/>}
-      {activeFormIndex === 4 && <EducationalForm/>}
-      {activeFormIndex === 5 && <SkillForm/>}
+      {activeFormIndex === 1 && <PersonalDetailForm resume={resume}/>}
+      {activeFormIndex === 2 && <SummaryForm resume={resume}/>}
+      {activeFormIndex === 3 && <ExperienceForm resume={resume}/>}
+      {activeFormIndex === 4 && <EducationalForm resume={resume}/>}
+      {activeFormIndex === 5 && <SkillForm resume={resume}/>}
     </div>
   )
 }

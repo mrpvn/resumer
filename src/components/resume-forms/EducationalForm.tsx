@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import { Input } from '../ui/input';
 import { EducationFormSchema } from '@/lib/form-validation';
@@ -15,7 +15,7 @@ import { useMutation } from '@tanstack/react-query';
 import { UpdateResume } from '@/services/api.svc';
 
 
-const EducationalForm = () => {
+const EducationalForm = ({resume}:{resume:any}) => {
   const {setActiveFormIndex, setFormPreview} = useResumeContext();
   const params = useParams();
   const { id } = params;
@@ -50,12 +50,22 @@ const EducationalForm = () => {
       academics: [{universityName: '', degree: '', major: '', startDate: '', endDate: '', description: ''}]
     }
   })
-  const { control } = form;
+  const { control, reset } = form;
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "academics",
   });
+
+  useEffect(() => {
+    if (resume?.academics && Array.isArray(resume.academics)) {
+      reset({
+        academics: resume.academics.length
+          ? resume.academics
+          : [{universityName: '', degree: '', major: '', startDate: '', endDate: '', description: ''}],
+      });
+    }
+  }, [resume, reset]);
   
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -67,14 +77,14 @@ const EducationalForm = () => {
     const fieldName = name.split(".")[2] 
     field.onChange(value);
     setFormPreview((prevState: FormPreviewType) => {
-      const updatedEducation = [...prevState.education];
+      const updatedEducation = [...prevState.academics];
       updatedEducation[index] = {
         ...updatedEducation[index],
         [fieldName]: value,
       };
       return {
         ...prevState,
-        education: updatedEducation
+        academics: updatedEducation
       };
     })
   }
@@ -82,7 +92,7 @@ const EducationalForm = () => {
   function handleFieldRemove(i:number){
     remove(i)
     setFormPreview((prevState: FormPreviewType) => {
-      const updatedEducation = [...prevState.education];
+      const updatedEducation = [...prevState.academics];
       updatedEducation.splice(i, 1);
       return {
         ...prevState,

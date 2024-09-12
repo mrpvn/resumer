@@ -1,5 +1,5 @@
 import { z } from "zod"
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from '../ui/input'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -13,7 +13,7 @@ import { UpdateResume } from "@/services/api.svc"
 import { useParams } from "next/navigation"
 import { useToast } from "@/hooks/use-toast"
 
-const PersonalDetailForm = () => {
+const PersonalDetailForm = ({resume}:{resume: any}) => {
   const {activeFormIndex, setActiveFormIndex, setFormPreview, } = useResumeContext();
   const params = useParams();
   const { id } = params;
@@ -48,6 +48,21 @@ const PersonalDetailForm = () => {
         email: "",
       },
     })
+
+    const {reset} = form
+
+    useEffect(() => {
+      if (resume) {
+        reset({
+          firstName: resume?.firstName || "",
+          lastName: resume?.lastName || "",
+          jobTitle: resume?.jobTitle || "",
+          address: resume?.address || "",
+          phone: resume?.phone || "",
+          email: resume?.email || "",
+        });
+      }
+    }, [resume])
    
     async function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
       mutation.mutate({values, id});

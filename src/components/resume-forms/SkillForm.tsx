@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Input } from '../ui/input'
 import { CirclePlus, MoveLeft, MoveRight } from 'lucide-react'
 import { Button } from '../ui/button'
@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast'
 import { useMutation } from '@tanstack/react-query'
 import { UpdateResume } from '@/services/api.svc'
 
-const SkillForm = () => {
+const SkillForm = ({resume}:{resume:any}) => {
 
   const {setActiveFormIndex, setFormPreview} = useResumeContext();
   const params = useParams();
@@ -49,12 +49,22 @@ const SkillForm = () => {
     },
   })
 
-  const { control } = form;
+  const { control, reset } = form;
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: "skills",
   });
+
+  useEffect(() => {
+    if (resume?.skills && Array.isArray(resume.skills)) {
+      reset({
+        skills: resume.skills.length
+          ? resume.skills
+          : [{name: "", rating: ""}],
+      });
+    }
+  }, [resume, reset]);
  
   function onSubmit(values: z.infer<typeof formSchema>) {
     mutation.mutate({values, id});
