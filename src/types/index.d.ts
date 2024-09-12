@@ -125,6 +125,37 @@ interface CreateNewResumeType {
   resumeId: string;
   userName: string;
   userEmail: string;
-
 }
+declare module 'html2pdf.js' {
+  interface Html2PdfOptions {
+      margin?: number | { top?: number; right?: number; bottom?: number; left?: number };
+      filename?: string;
+      image?: {
+          type?: string;
+          quality?: number;
+      };
+      html2canvas?: any; // Define this more specifically if needed
+      jsPDF?: any; // Define this more specifically if needed
+      pagebreak?: any; // Define this more specifically if needed
+      width?: number | string;
+      height?: number | string;
+      x?: number;
+      y?: number;
+  }
+
+  interface Html2PdfInstance {
+      from(element: HTMLElement | string): Html2PdfInstance;
+      toPdf(): Promise<any>;
+      save(filename?: string): Promise<void>;
+      output(type?: 'datauristring' | 'blob' | 'arraybuffer' | 'pdf'): Promise<any>;
+      set(options: Html2PdfOptions): Html2PdfInstance;
+      then(callback: (instance: Html2PdfInstance) => void): Html2PdfInstance;
+      catch(callback: (error: any) => void): Html2PdfInstance;
+  }
+
+  function html2pdf(element: HTMLElement | string, options?: Html2PdfOptions): Html2PdfInstance;
+
+  export = html2pdf;
+}
+
 

@@ -14,7 +14,10 @@ const EditResume = () => {
 
   const {data: resume, isSuccess} = useQuery({
     queryKey: ["resume", id],
-    queryFn: GetSingleResume,
+    queryFn: ({queryKey}) => {
+      const [, id] = queryKey
+      return GetSingleResume(id as string)
+    },
     enabled: !!id
   })
 

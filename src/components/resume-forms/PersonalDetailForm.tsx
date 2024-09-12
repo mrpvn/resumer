@@ -62,7 +62,7 @@ const PersonalDetailForm = ({resume}:{resume: any}) => {
           email: resume?.email || "",
         });
       }
-    }, [resume])
+    }, [resume, reset])
    
     async function onSubmit(values: z.infer<typeof PersonalDetailFormSchema>) {
       mutation.mutate({values, id});

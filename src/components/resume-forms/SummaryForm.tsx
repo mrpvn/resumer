@@ -61,7 +61,7 @@ const SummaryForm = ({resume}:{resume:any}) => {
           summary: resume?.summary
         });
       }
-    }, [resume])
+    }, [resume, reset])
    
     function onSubmit(values: z.infer<typeof SummaryFormSchema>) {
       mutation.mutate({values, id});

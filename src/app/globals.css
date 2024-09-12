@@ -68,8 +68,12 @@
   }
 }
 
+@layer base {
+  img {display: initial;}
+}
+
 .auth {
-  @apply flex-center min-h-screen w-full bg-purple-100
+  @apply flex-center min-h-screen w-full
 }
 
 .root {

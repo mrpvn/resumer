@@ -25,7 +25,7 @@ const AddResume = () => {
     mutationFn: CreateNewResume,
     onSuccess: () => {
       // Invalidate and refetch queries on success (optional)
-      queryClient.invalidateQueries(['resumes']);
+      queryClient.invalidateQueries({queryKey: ['resumes']});
       toast({
         description: "Your resume has been created successfully!",
       })

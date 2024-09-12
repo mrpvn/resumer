@@ -5,9 +5,6 @@ import ProfessionalExp from '../resume-preview/ProfessionalExp'
 import Educational from '../resume-preview/Educational'
 import Skill from '../resume-preview/Skill'
 import { useResumeContext } from '@/context/context'
-import { useParams } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
-import { GetSingleResume } from '@/services/api.svc'
 
 const ResumePreview = ({resume, isSuccess} : {resume: any, isSuccess: boolean}) => {
   const {formPreview, setFormPreview} = useResumeContext();
@@ -31,7 +28,7 @@ const ResumePreview = ({resume, isSuccess} : {resume: any, isSuccess: boolean}) 
         skills: resume?.skills,
       })
     }
-  }, [resume, isSuccess])
+  }, [resume, isSuccess, setFormPreview])
 
   return (
     <div className='shadow-lg h-full p-14'>

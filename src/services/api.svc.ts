@@ -10,6 +10,8 @@ const axiosClient = axios.create({
   },
 });
 
+
+
 const CreateNewResume = async (data: CreateNewResumeType) => {
   const response = await axiosClient.post('/api/resume', data);
   return response.data;
@@ -25,7 +27,7 @@ const GetResumeList = async (userEmail: string) => {
 }
 
 const GetSingleResume = async (id: string) => {
-  const resumeId = id?.queryKey[1]
+  const resumeId = id;
   const response = await axiosClient.get(`/api/resume/${resumeId}`);
   return response.data;
 }
@@ -40,10 +42,16 @@ const DeleteResume = async (id: string) => {
   return response.data
 }
 
+const CreateUser = async (userData: UserType) => {
+  const response = await axiosClient.post('/api/user', userData);
+  return response.data;
+}
+
 export {
   CreateNewResume,
   GetResumeList,
   GetSingleResume,
   UpdateResume,
-  DeleteResume
+  DeleteResume,
+  CreateUser
 }

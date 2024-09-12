@@ -12,22 +12,24 @@ import { useParams } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
 import { useMutation } from '@tanstack/react-query'
 import { UpdateResume } from '@/services/api.svc'
+import { useRouter } from 'next/navigation'
 
 const SkillForm = ({resume}:{resume:any}) => {
 
   const {setActiveFormIndex, setFormPreview} = useResumeContext();
   const params = useParams();
   const { id } = params;
+  const router = useRouter();
   const {toast} = useToast();
 
     const mutation = useMutation({
       mutationFn: UpdateResume,
       onSuccess: () => {
-        // Invalidate and refetch queries on success (optional)
-        // queryClient.invalidateQueries(['resumes']);
         toast({
           description: "Skill has been updated successfully!",
         })
+        router.push(`/dashboard/resume/${id}/view`)
+        
       },
       onError: (error: any) => {
         toast({

@@ -22,7 +22,6 @@ const Header = () => {
               Dashboard
             </Button>
           </Link>
-          <ModeToggle/>
           <UserButton/>
         </span>
       ) : (

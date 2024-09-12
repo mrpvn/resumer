@@ -18,8 +18,8 @@ export async function POST(req: Request) {
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const userEmail = searchParams.get('email[queryKey][1]');
-
+  const userEmail = searchParams.get('email');
+  
   try {
     await connectToDatabase();
     const resumes = await Resume.find({userEmail});
