@@ -19,14 +19,13 @@ const ViewResume = () => {
     queryKey: ["resume", id],
     queryFn: ({queryKey}) => {
       const [, id] = queryKey
-      GetSingleResume(id as string);
+      return GetSingleResume(id as string);
     },
     enabled: !!id
   })
 
   function handleDownload(){
     const element = document.querySelector('#print-area') as HTMLElement | null;
-
     if (element) {
       html2pdf(element, {
           filename: 'resume.pdf'
@@ -38,13 +37,10 @@ const ViewResume = () => {
 
   return (
     <ResumeContextProvider>
-      <div className='my-10 mx-10 md:mx-20 lg:mx-36'>
-        <h2 className='text-center text-2xl font-medium'>Your resume is ready to Download and Share 🎉</h2>
-        <div id='print-area'>
+      <div className='flex flex-col gap-4 items-center my-10 mx-10 md:mx-20 lg:mx-36'>
+        <h2 className='text-center text-3xl font-medium'>Your resume is ready to<Button onClick={handleDownload} className='text-3xl' variant="link">Download</Button>🎉</h2>
+        <div id='print-area' className='w-2/3 border'>
           <ResumePreview resume={resume} isSuccess={isSuccess}/>
-        </div>
-        <div className='flex justify-center px-44 my-10'>
-          <Button variant="outline" onClick={handleDownload}>Download <ArrowDownToLine className='ml-2' size={16} /></Button>
         </div>
       </div>
     </ResumeContextProvider>

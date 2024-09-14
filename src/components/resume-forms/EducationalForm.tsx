@@ -11,13 +11,14 @@ import { Textarea } from '../ui/textarea';
 import { useResumeContext } from '@/context/context';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UpdateResume } from '@/services/api.svc';
 
 
 const EducationalForm = ({resume}:{resume:any}) => {
   const {setActiveFormIndex, setFormPreview} = useResumeContext();
   const params = useParams();
+  const queryClient = useQueryClient();
   const { id } = params;
   const {toast} = useToast();
 
@@ -25,7 +26,7 @@ const EducationalForm = ({resume}:{resume:any}) => {
       mutationFn: UpdateResume,
       onSuccess: () => {
         // Invalidate and refetch queries on success (optional)
-        // queryClient.invalidateQueries(['resumes']);
+        queryClient.invalidateQueries({queryKey: ['resume']});
         setActiveFormIndex((i:number) => i+1)
         toast({
           description: "Education details has been updated successfully!",

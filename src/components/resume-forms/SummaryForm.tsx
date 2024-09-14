@@ -16,15 +16,15 @@ import {
 } from "@/components/ui/form"
 import { MoveLeft, MoveRight } from 'lucide-react'
 import { useResumeContext } from '@/context/context'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UpdateResume } from '@/services/api.svc'
 import { useParams } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
-import Resume from '@/lib/database/models/resume/resume.model'
 
 const SummaryForm = ({resume}:{resume:any}) => {
     const {setActiveFormIndex, setFormPreview} = useResumeContext();
     const params = useParams();
+    const queryClient = useQueryClient();
     const { id } = params;
     const {toast} = useToast();
 
@@ -32,7 +32,7 @@ const SummaryForm = ({resume}:{resume:any}) => {
       mutationFn: UpdateResume,
       onSuccess: () => {
         // Invalidate and refetch queries on success (optional)
-        // queryClient.invalidateQueries(['resumes']);
+        queryClient.invalidateQueries({queryKey: ['resume']});
         setActiveFormIndex((i:number) => i+1)
         toast({
           description: "Summary has been updated successfully!",

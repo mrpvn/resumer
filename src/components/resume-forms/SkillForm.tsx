@@ -10,7 +10,7 @@ import { z } from 'zod'
 import { useResumeContext } from '@/context/context'
 import { useParams } from 'next/navigation'
 import { useToast } from '@/hooks/use-toast'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UpdateResume } from '@/services/api.svc'
 import { useRouter } from 'next/navigation'
 
@@ -19,12 +19,14 @@ const SkillForm = ({resume}:{resume:any}) => {
   const {setActiveFormIndex, setFormPreview} = useResumeContext();
   const params = useParams();
   const { id } = params;
+  const queryClient = useQueryClient();
   const router = useRouter();
   const {toast} = useToast();
 
     const mutation = useMutation({
       mutationFn: UpdateResume,
       onSuccess: () => {
+        queryClient.invalidateQueries({queryKey: ['resume']});
         toast({
           description: "Skill has been updated successfully!",
         })

@@ -12,12 +12,13 @@ import { useResumeContext } from '@/context/context';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { UpdateResume } from '@/services/api.svc';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const ExperienceForm = ({resume}:{resume:any}) => {
 
   const {setActiveFormIndex, setFormPreview} = useResumeContext()
   const params = useParams();
+  const queryClient = useQueryClient();
   const { id } = params;
   const {toast} = useToast();
 
@@ -25,7 +26,7 @@ const ExperienceForm = ({resume}:{resume:any}) => {
       mutationFn: UpdateResume,
       onSuccess: () => {
         // Invalidate and refetch queries on success (optional)
-        // queryClient.invalidateQueries(['resumes']);
+        queryClient.invalidateQueries({queryKey: ['resume']});
         setActiveFormIndex((i:number) => i+1)
         toast({
           description: "Experience has been updated successfully!",
