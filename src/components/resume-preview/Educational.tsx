@@ -5,9 +5,9 @@ const Educational: React.FC<AcademicsProps> = ({academics}) => {
     <div className='my-6'>
       <h2 className={`text-center font-bold text-sm mb-2`}>Education</h2>
       <hr className={`border`} />
-      {academics?.map((education) => {
+      {academics?.map((education, i) => {
         return (
-          <div className='my-5' key={education.id}>
+          <div className='my-5' key={i}>
             <h2 className={`font-bold text-sm`}>{education.universityName}</h2>
             <h2 className={`flex justify-between text-xs`}>
               {education.degree} in {education.major}

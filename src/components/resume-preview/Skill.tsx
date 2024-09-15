@@ -9,9 +9,9 @@ const Skill: React.FC<SkillProps> = ({skills}) => {
     <h2 className={`text-center font-bold text-sm mb-2`}>Skills</h2>
     <hr className={`border`} />
     <div className='grid grid-cols-2 gap-2 gap-x-10 my-4'>
-      {skills?.map((skill) => {
+      {skills?.map((skill, i) => {
       return (
-          <div className='my-5 flex items-center justify-between' key={skill.id}>
+          <div className='my-5 flex items-center justify-between' key={i}>
             <h2 className={`font-bold text-sm`}>{skill.name}</h2>
             <div className='flex items-center justify-center gap-1'>
               <div className='h-3 bg-primary-foreground w-[120px] rounded-md'>

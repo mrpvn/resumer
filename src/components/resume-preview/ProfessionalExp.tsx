@@ -5,9 +5,9 @@ const ProfessionalExp: React.FC<ExperienceProps> = ({experience}) => {
     <div className='my-6'>
     <h2 className={`text-center font-bold text-sm mb-2`}>Professional Experience</h2>
     <hr className={`border`} />
-    {experience?.map((exp) => {
+    {experience?.map((exp, i) => {
       return (
-        <div className='my-5' key={exp.id}>
+        <div className='my-5' key={i}>
           <h2 className={`font-bold text-sm`}>{exp.title}</h2>
           <h2 className={`flex justify-between text-xs`}>
             {exp.companyName}, {exp.city}, {exp.state}
