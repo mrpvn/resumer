@@ -1,13 +1,9 @@
-const {
-  GoogleGenerativeAI,
-  HarmCategory,
-  HarmBlockThreshold,
-} = require("@google/generative-ai");
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-require('dotenv').config();
+// require('dotenv').config();
 
 const apiKey = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI("AIzaSyCWUfsrPRg8iV4Lt_A3XSkDbzv4-G93lUs");
+const genAI = new GoogleGenerativeAI(apiKey as string);
 
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
