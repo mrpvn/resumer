@@ -26,7 +26,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <TanstackProvider>
             <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
-              <Header/>
+             
               {children}
               <Toaster />
             </ThemeProvider>
