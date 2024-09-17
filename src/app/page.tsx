@@ -1,30 +1,118 @@
 "use client"
 
-import React from 'react'
-import { useUser } from '@clerk/nextjs'
-import Link from 'next/link';
+import { Button } from "@/components/ui/button"
+import { useUser } from "@clerk/nextjs"
+import { FileText, Zap, CheckCircle } from "lucide-react"
+import Image from "next/image"
+import { useRouter } from "next/navigation";
 
-function Home() {
+export default function HomePage() {
 
+  const router = useRouter();
   const {user} = useUser();
 
   return (
-    <div>
-     <section className=" z-50">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
-            <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
-              Build Your Resume With <span className='text-primary'>Resumer</span> </h1>
-            <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Effortlessly Craft a Standout Resume with Our AI-Powered Builder</p>
-            <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-                <Link href="/dashboard" className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primary focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-                    {user ? "Dashboard" : "Get Started"}
-                    <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </Link>  
+    <div className="flex flex-col min-h-screen">
+      <header className="px-4 lg:px-6 h-14 flex items-center">
+        <a className="flex items-center justify-center" href="#">
+          <Image src="/logo.svg" width={50} height={50} alt="Logo" />
+          <span className="ml-2 text-4xl font-bold text-primary">Resumer</span>
+        </a>
+ 
+      </header>
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                  Create Your Perfect Resume with AI
+                </h1>
+                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+                  Resumer uses advanced AI to help you craft a professional, tailored resume in minutes. Stand out from the crowd and land your dream job.
+                </p>
+              </div>
+              <div className="space-x-4">
+                <Button onClick={() => router.push('/dashboard')} className="bg-primary hover:bg-primary/90">Get Started</Button>
+              </div>
             </div>
-        </div>
-    </section>
-  </div>
+          </div>
+        </section>
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">Key Features</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="flex flex-col items-center text-center">
+                <FileText className="h-12 w-12 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">AI-Powered Content</h3>
+                <p className="text-gray-500 dark:text-gray-400">Our AI generates tailored content based on your experience and the job you&#39;re applying for.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <Zap className="h-12 w-12 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">Instant Generation</h3>
+                <p className="text-gray-500 dark:text-gray-400">Create a professional resume in minutes, not hours. Save time and reduce stress.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <CheckCircle className="h-12 w-12 text-primary mb-4" />
+                <h3 className="text-xl font-bold mb-2">ATS-Friendly</h3>
+                <p className="text-gray-500 dark:text-gray-400">Our resumes are optimized to pass Applicant Tracking Systems, increasing your chances of landing an interview.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-12">How It Works</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold mb-4">1</div>
+                <h3 className="text-xl font-bold mb-2">Input Your Information</h3>
+                <p className="text-gray-500 dark:text-gray-400">Enter your work experience, skills, and education into our user-friendly interface.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold mb-4">2</div>
+                <h3 className="text-xl font-bold mb-2">AI Generation</h3>
+                <p className="text-gray-500 dark:text-gray-400">Our AI analyzes your input and creates a tailored, professional resume.</p>
+              </div>
+              <div className="flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold mb-4">3</div>
+                <h3 className="text-xl font-bold mb-2">Download and Apply</h3>
+                <p className="text-gray-500 dark:text-gray-400">Review, edit if needed, and download your polished resume. You&#39;re ready to apply!</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-white">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center space-y-4 text-center">
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Ready to Create Your Perfect Resume?</h2>
+                <p className="mx-auto max-w-[600px] text-primary-foreground md:text-xl">
+                  Join thousands of job seekers who have successfully landed their dream jobs with Resumer.
+                </p>
+              </div>
+              <div className="w-full max-w-sm space-y-2">
+                <form className="flex justify-center space-x-2">
+                  <Button onClick={() => router.push('/dashboard')} className="bg-white text-primary hover:bg-gray-100" type="button">
+                    Get Started
+                  </Button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+        <p className="text-xs text-gray-500 dark:text-gray-400">© 2024 Resumer. All rights reserved.</p>
+        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
+          <a className="text-xs hover:underline underline-offset-4" href="#">
+            Terms of Service
+          </a>
+          <a className="text-xs hover:underline underline-offset-4" href="#">
+            Privacy
+          </a>
+        </nav>
+      </footer>
+    </div>
   )
 }
-
-export default Home

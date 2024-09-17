@@ -39,7 +39,7 @@ const ViewResume = () => {
     <ResumeContextProvider>
       <div className='my-10 mx-10 md:mx-20 lg:mx-36'>
         <h2 className='text-center text-3xl font-medium'>Your resume is ready to<Button onClick={handleDownload} className='text-3xl' variant="link">Download</Button>🎉</h2>
-        <div id='print-area' className='border mx-auto my-4'>
+        <div id='print-area' className='mx-auto my-4'>
           <ResumePreview resume={resume} isSuccess={isSuccess}/>
         </div>
       </div>

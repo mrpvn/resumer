@@ -1,18 +1,18 @@
 import { ExperienceFormSchema } from '@/lib/form-validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import React, { useEffect, useState } from 'react'
-import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import React, { useEffect } from 'react'
+import { useFieldArray, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { Button } from "@/components/ui/button"
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Textarea } from '../ui/textarea';
 import { CirclePlus, MoveLeft, MoveRight } from 'lucide-react';
 import { useResumeContext } from '@/context/context';
 import { useParams } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { UpdateResume } from '@/services/api.svc';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import RichTextEditor from '../shared/TextEditor';
 
 const ExperienceForm = ({resume}:{resume:any}) => {
 
@@ -76,6 +76,21 @@ const ExperienceForm = ({resume}:{resume:any}) => {
     const {name, value} = e.target
     const fieldName = name.split(".")[2] 
     field.onChange(value);
+    setFormPreview((prevState: FormPreviewType) => {
+      const updatedExperience = [...prevState.experience];
+      updatedExperience[index] = {
+        ...updatedExperience[index],
+        [fieldName]: value,
+      };
+      return {
+        ...prevState,
+        experience: updatedExperience
+      };
+    })
+  }
+
+  function handleTextEditor(value:string, field:any, index:number){
+    const fieldName = field.name.split(".")[2] 
     setFormPreview((prevState: FormPreviewType) => {
       const updatedExperience = [...prevState.experience];
       updatedExperience[index] = {
@@ -205,7 +220,10 @@ const ExperienceForm = ({resume}:{resume:any}) => {
                           <FormItem className='col-span-2'>
                             <FormLabel>Work Summary</FormLabel>
                             <FormControl>
-                              <Textarea placeholder="work summary..." {...field} onChange={(e) => handleFieldChange(e, field, i)} />
+                              <RichTextEditor value={field.value} onChange={(value: any) => {
+                                field.onChange(value)
+                                handleTextEditor(value, field, i);
+                              }}/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>
