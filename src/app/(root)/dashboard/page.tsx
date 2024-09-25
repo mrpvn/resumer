@@ -64,15 +64,15 @@ const handleViewResume = (resumeId: string) => {
       <div className="py-5 px-10 md:py-10 md:px-20 lg:py-16 lg:px-32">
         <h2 className="font-bold text-3xl">My resume</h2>
         <p className="my-4 text-lg">Create your resume to get your dream job.</p>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-2 md:gap-5 mt-10">
           <AddResume/>
           {
             isLoading ?
             <>
-              <Skeleton className="w-[235px] h-[280px] mt-10" />
-              <Skeleton className="w-[235px] h-[280px] mt-10" />
-              <Skeleton className="w-[235px] h-[280px] mt-10" />
-              <Skeleton className="w-[235px] h-[280px] mt-10" />
+              <Skeleton className="w-[350px] h-[280px] md:w-[235px] md:h-[280px] mt-10" />
+              <Skeleton className="w-[350px] h-[280px] md:w-[235px] md:h-[280px] mt-10" />
+              <Skeleton className="w-[350px] h-[280px] md:w-[235px] md:h-[280px] mt-10" />
+              <Skeleton className="w-[350px] h-[280px] md:w-[235px] md:h-[280px] mt-10" />
             </> :
             resumes?.map((resume: any) => {
               return(
@@ -80,7 +80,7 @@ const handleViewResume = (resumeId: string) => {
                   <p className='text-center text-xl font-semibold'>
                     {resume.title}
                   </p>
-                  <div className='hidden group-hover:block absolute bottom-3 w-full animate-out'>
+                  <div className='lg:hidden group-hover:block absolute bottom-3 w-full animate-out'>
                     <div className='flex justify-around px-2'>
                       <div onClick={() => handleViewResume(resume.resumeId)} title='view' className='p-3 bg-secondary rounded-md hover:bg-primary-foreground'>
                         <Eye size={20}/>

@@ -11,9 +11,9 @@ const Skill: React.FC<SkillProps> = ({skills}) => {
     <div className='grid grid-cols-2 gap-2 gap-x-10 my-4'>
       {skills?.map((skill, i) => {
       return (
-          <div className='my-5 flex items-center justify-between' key={i}>
+          <div className='my-5 md:flex size-max:flex-col items-center justify-between' key={i}>
             <h2 className={`font-bold text-sm`}>{skill.name}</h2>
-            <div className='flex items-center justify-center gap-1'>
+            <div className='flex items-center md:justify-center gap-1'>
               <div className='h-3 bg-primary-foreground w-[120px] rounded-md'>
                   <div className={`h-3 bg-primary rounded-md`} style={{ width: `${skill.rating}%` }}>
                   </div>

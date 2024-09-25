@@ -2,8 +2,11 @@
 
 import { Button } from "@/components/ui/button"
 import { useUser } from "@clerk/nextjs"
-import { FileText, Zap, CheckCircle } from "lucide-react"
+import { FileText, Zap, CheckCircle} from "lucide-react"
 import Image from "next/image"
+import Link from "next/link"
+import { LuGithub } from "react-icons/lu";
+import { BsTwitterX } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 
 export default function HomePage() {
@@ -105,12 +108,12 @@ export default function HomePage() {
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-gray-500 dark:text-gray-400">© 2024 Resumer. All rights reserved.</p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <a className="text-xs hover:underline underline-offset-4" href="#">
-            Terms of Service
-          </a>
-          <a className="text-xs hover:underline underline-offset-4" href="#">
-            Privacy
-          </a>
+          <Link className="text-xs hover:underline underline-offset-4" href="https://github.com/mrpvn">
+            <LuGithub size={20} />
+          </Link>
+          <Link className="text-xs hover:underline underline-offset-4" href="https://x.com/mrpvnx">
+            <BsTwitterX size={20} />
+          </Link>
         </nav>
       </footer>
     </div>
