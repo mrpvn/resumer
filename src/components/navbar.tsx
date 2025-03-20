@@ -14,7 +14,7 @@ const Navbar = () => {
   const { isSignedIn } = useUser();
   const { theme } = useTheme();
   return (
-    <div className="flex px-4 py-2 justify-between shadow-md">
+    <div className="flex px-6 py-4 justify-between border-b shadow-md">
       <div className="flex items-center gap-2">
         <Link href={"/resumes"}>
           <Image src="/file.svg" width={35} height={35} alt="Logo" />

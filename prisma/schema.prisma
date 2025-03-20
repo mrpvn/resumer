@@ -15,6 +15,7 @@ datasource db {
 
 model User {
   id        String  @id @default(cuid())
+  userId    String  @unique
   email     String  @unique
   firstName String?
   lastName  String?
@@ -27,17 +28,6 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@map("users")
-}
-
-model Subscription {
-  id        String            @id @default(cuid())
-  user      User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String?           @unique
-  createdAt DateTime          @default(now())
-  plan      SUBSCRIPTION_PLAN @default(FREE)
-  updatedAt DateTime          @updatedAt
-
-  @@map("subscriptions")
 }
 
 model Resume {
@@ -144,7 +134,19 @@ model Achievement {
   @@map("achievements")
 }
 
+model Subscription {
+  id        String            @id @default(cuid())
+  user      User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String?           @unique
+  createdAt DateTime          @default(now())
+  plan      SUBSCRIPTION_PLAN @default(FREE)
+  updatedAt DateTime          @updatedAt
+
+  @@map("subscriptions")
+}
+
 enum SUBSCRIPTION_PLAN {
   PRO
   FREE
 }
+
