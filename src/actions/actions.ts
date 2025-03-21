@@ -50,3 +50,34 @@ export async function CreateResume(resumeTitle: string) {
     throw new Error("Failed to create resume");
   }
 }
+
+export async function GetAllResumes() {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    const resumes = await prisma.resume.findMany({
+      where: {
+        userId: userId,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+      include: {
+        personalInfo: true,
+        workExperiences: true,
+        educations: true,
+        skills: true,
+        projects: true,
+        achievements: true,
+      },
+    });
+    return resumes;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to get resumes");
+  }
+}

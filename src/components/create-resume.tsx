@@ -36,9 +36,10 @@ const CreateResumeButton = () => {
       toast.error("Failed to create resume");
     },
   });
+
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button className="flex items-center gap-2 cursor-pointer">
           <PlusCircle className="h-4 w-4" />
           Create New Resume
@@ -69,7 +70,8 @@ const CreateResumeButton = () => {
               </Button>
             </DialogClose>
             <Button
-              className="cursor-pointer"
+              className="cursor-pointer w-16"
+              disabled={isPending}
               onClick={() => {
                 if (resumeTitle === "") {
                   toast.error("Please enter a title");
@@ -79,7 +81,7 @@ const CreateResumeButton = () => {
               }}
             >
               {isPending ? (
-                <Loader className="h-4 w-4 animate-spin" />
+                <Loader className="h-4 w-4 animate-spin mx-auto" />
               ) : (
                 "Create"
               )}

@@ -14,8 +14,7 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(cuid())
-  userId    String  @unique
+  userId    String  @id
   email     String  @unique
   firstName String?
   lastName  String?
@@ -32,7 +31,7 @@ model User {
 
 model Resume {
   id              String           @id @default(cuid())
-  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User             @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId          String
   title           String?
   personalInfo    PersonalInfo?
@@ -136,7 +135,7 @@ model Achievement {
 
 model Subscription {
   id        String            @id @default(cuid())
-  user      User?             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User?             @relation(fields: [userId], references: [userId], onDelete: Cascade)
   userId    String?           @unique
   createdAt DateTime          @default(now())
   plan      SUBSCRIPTION_PLAN @default(FREE)
