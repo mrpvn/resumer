@@ -81,3 +81,23 @@ export async function GetAllResumes() {
     throw new Error("Failed to get resumes");
   }
 }
+
+export async function GetResume(resumeId: string) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const resume = await prisma.resume.findUnique({
+    where: { id: resumeId, userId },
+    include: {
+      personalInfo: true,
+      workExperiences: true,
+      educations: true,
+      projects: true,
+      skills: true,
+      achievements: true,
+    },
+  });
+
+  if (!resume) return null;
+  return resume;
+}
