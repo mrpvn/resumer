@@ -44,7 +44,22 @@ const PersonalInfoForm = ({ resumeData, setResumeData }: FormProps) => {
     const { unsubscribe } = form.watch(async (values) => {
       const isValid = await form.trigger();
       if (!isValid) return;
-      setResumeData({ ...resumeData, ...values });
+      setResumeData({
+        ...resumeData,
+        personalInfo: {
+          id: resumeData.personalInfo?.id || "",
+          resumeId: resumeData.id,
+          firstName: values.firstName || null,
+          lastName: values.lastName || null,
+          email: values.email || null,
+          phone: values.phone || null,
+          linkedin: values.linkedin || null,
+          github: values.github || null,
+          website: values.website || null,
+          address: values.address || null,
+          summary: values.summary || null,
+        },
+      });
     });
     return unsubscribe;
   }, [form, resumeData, setResumeData]);

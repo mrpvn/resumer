@@ -8,11 +8,6 @@ import {
   WorkExperience,
 } from "@prisma/client";
 
-export interface ResumeEditorFormProps {
-  resumeData: Resume;
-  setResumeData: (data: Resume) => void;
-}
-
 export type ResumeWithRelations = Resume & {
   personalInfo: PersonalInfo | null;
   workExperiences: WorkExperience[];

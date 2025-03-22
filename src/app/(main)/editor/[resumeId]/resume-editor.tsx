@@ -7,6 +7,7 @@ import { formSteps } from "@/lib/form-steps";
 import { ResumeWithRelations } from "@/lib/types";
 import { LayoutGrid } from "lucide-react";
 import React, { useState } from "react";
+import ResumePreviewContainer from "./resume-preview-container";
 
 const ResumeEditor = ({
   resumeToEdit,
@@ -21,8 +22,6 @@ const ResumeEditor = ({
   const FormComponent = formSteps.find(
     (step) => step.key === currentStep
   )?.component;
-
-  console.log("FormComponent");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10">
@@ -43,7 +42,7 @@ const ResumeEditor = ({
         )}
         <FormFooter currentStep={currentStep} setCurrentStep={setCurrentStep} />
       </div>
-      {/* <ResumePreview resumeData={resumeData} setResumeData={setResumeData} /> */}
+      <ResumePreviewContainer resumeData={resumeData} />
     </div>
   );
 };
