@@ -18,11 +18,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CreateResume } from "@/actions/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import usePremiumModal from "@/hooks/usePremiumModal";
 
-const CreateResumeButton = () => {
+const CreateResumeButton = ({ canCreate }: { canCreate: boolean }) => {
   const [resumeTitle, setResumeTitle] = useState("");
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { setOpen } = usePremiumModal();
 
   const { mutate: createResume, isPending } = useMutation({
     mutationFn: CreateResume,
@@ -38,58 +40,72 @@ const CreateResumeButton = () => {
   });
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="flex items-center gap-2 cursor-pointer">
+    <>
+      {canCreate ? (
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="flex items-center gap-2 cursor-pointer">
+              <PlusCircle className="h-4 w-4" />
+              Create New Resume
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create new resume</DialogTitle>
+              <DialogDescription>
+                <span className="block my-3">
+                  Add a title for your new resume
+                </span>
+                <Input
+                  value={resumeTitle}
+                  onChange={(e) => setResumeTitle(e.target.value)}
+                  placeholder="Ex.Full stack resume"
+                />
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <div className="flex gap-2 justify-end">
+                <DialogClose asChild>
+                  <Button
+                    onClick={() => {
+                      setResumeTitle("");
+                    }}
+                    variant="ghost"
+                  >
+                    Cancel
+                  </Button>
+                </DialogClose>
+                <Button
+                  className="cursor-pointer w-16"
+                  disabled={isPending}
+                  onClick={() => {
+                    if (resumeTitle === "") {
+                      toast.error("Please enter a title");
+                      return;
+                    }
+                    createResume(resumeTitle);
+                  }}
+                >
+                  {isPending ? (
+                    <Loader className="h-4 w-4 animate-spin mx-auto" />
+                  ) : (
+                    "Create"
+                  )}
+                </Button>
+              </div>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      ) : (
+        <Button
+          onClick={() => setOpen(true)}
+          className="flex items-center gap-2 cursor-pointer"
+        >
           <PlusCircle className="h-4 w-4" />
           Create New Resume
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create new resume</DialogTitle>
-          <DialogDescription>
-            <span className="block my-3">Add a title for your new resume</span>
-            <Input
-              value={resumeTitle}
-              onChange={(e) => setResumeTitle(e.target.value)}
-              placeholder="Ex.Full stack resume"
-            />
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <div className="flex gap-2 justify-end">
-            <DialogClose asChild>
-              <Button
-                onClick={() => {
-                  setResumeTitle("");
-                }}
-                variant="ghost"
-              >
-                Cancel
-              </Button>
-            </DialogClose>
-            <Button
-              className="cursor-pointer w-16"
-              disabled={isPending}
-              onClick={() => {
-                if (resumeTitle === "") {
-                  toast.error("Please enter a title");
-                  return;
-                }
-                createResume(resumeTitle);
-              }}
-            >
-              {isPending ? (
-                <Loader className="h-4 w-4 animate-spin mx-auto" />
-              ) : (
-                "Create"
-              )}
-            </Button>
-          </div>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      )}
+    </>
   );
 };
 

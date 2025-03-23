@@ -16,7 +16,7 @@ const ResumesPage = async () => {
         <h1 className="text-3xl font-bold tracking-tight mb-4 md:mb-0">
           My Resumes
         </h1>
-        <CreateResumeButton />
+        <CreateResumeButton canCreate={false} />
       </div>
       <ResumesClient initialResumes={resumes} />
     </div>

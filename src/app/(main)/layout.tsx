@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import { SubscriptionPlanModal } from "@/components/premium-modal";
 import React from "react";
 
 type Props = {
@@ -10,6 +11,7 @@ const Layout = ({ children }: Props) => {
     <div>
       <Navbar />
       {children}
+      <SubscriptionPlanModal />
     </div>
   );
 };

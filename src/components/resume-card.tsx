@@ -48,9 +48,11 @@ export default function ResumeCard({
     documentTitle: resume.title || "Resume",
   });
   return (
-    <Card className="group relative border rounded-lg border-transparent hover:border-border transition-colors bg-secondary">
+    <Card className="group relative border gap-3 rounded-lg border-transparent hover:border-border transition-colors bg-secondary">
       <CardHeader>
-        <CardTitle>{resume?.title}</CardTitle>
+        <CardTitle className="text-center sm:text-xs md:text-sm">
+          {resume?.title}
+        </CardTitle>
         <CardDescription className="text-xs text-muted-foreground line-clamp-2 overflow-hidden whitespace-nowrap">
           {wasUpdated ? "Updated" : "Created"} on{" "}
           {resume.updatedAt
@@ -87,7 +89,7 @@ function MenuButton({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-0.5 top-0.5 opacity-0 transition-opacity group-hover:opacity-100"
+            className="absolute right-0.5 top-0.5 lg:opacity-0 transition-opacity group-hover:opacity-100"
           >
             <MoreVertical className="size-4" />
           </Button>

@@ -218,6 +218,15 @@ export async function GetAllResumes() {
   }
 }
 
+export async function GetResumeCount() {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error("User not authenticated");
+  }
+  const resumeCount = await prisma.resume.count({ where: { userId } });
+  return resumeCount;
+}
+
 export async function GetResume(resumeId: string) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
