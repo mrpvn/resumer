@@ -48,7 +48,7 @@ const StandardTemplate = ({
       {/* Education Section */}
       {educationsFieldsNotEmpty && educationsFieldsNotEmpty.length > 0 ? (
         <section className="mb-4">
-          <h2 className="text-[14px] font-bold uppercase border-b pb-1 mb-2">
+          <h2 className="text-[14px] font-bold uppercase border-b border-black pb-1 mb-2">
             Education
           </h2>
           <div className="mb-2">
@@ -57,7 +57,8 @@ const StandardTemplate = ({
                 <div key={index}>
                   <div className="flex justify-between items-start">
                     <span className="font-bold text-[12px]">
-                      {edu.institutionName}
+                      {edu.institutionName}{" "}
+                      {edu.location && `, ${edu.location}`}
                     </span>
                     <span className="text-[11px]">
                       {edu.startDate && formatDate(edu.startDate, "MMM yyyy")}
@@ -86,7 +87,7 @@ const StandardTemplate = ({
       {workExperiencesFieldsNotEmpty &&
       workExperiencesFieldsNotEmpty.length > 0 ? (
         <section className="mb-4">
-          <h2 className="text-[14px] font-bold uppercase border-b pb-1 mb-2">
+          <h2 className="text-[14px] font-bold uppercase border-b border-black pb-1 mb-2">
             Professional Experience
           </h2>
           <div className="mb-3">
@@ -125,7 +126,7 @@ const StandardTemplate = ({
       {/* Projects Section */}
       {projectsFieldsNotEmpty && projectsFieldsNotEmpty.length > 0 ? (
         <section className="mb-4">
-          <h2 className="text-[14px] font-bold uppercase border-b pb-1 mb-2">
+          <h2 className="text-[14px] font-bold uppercase border-b border-black pb-1 mb-2">
             Projects
           </h2>
 
@@ -161,11 +162,11 @@ const StandardTemplate = ({
       {/* Skills Section */}
       {skills && skills.functionalSkills && skills.technicalSkills && (
         <section className="mb-4">
-          <h2 className="text-[14px] font-bold uppercase border-b pb-1 mb-2">
+          <h2 className="text-[14px] font-bold uppercase border-b border-black pb-1 mb-2">
             Skills
           </h2>
 
-          <div className="grid grid-cols-2 gap-2 text-[11px]">
+          <div className="text-[11px]">
             <div>
               <span className="font-bold">Functional:</span>{" "}
               {skills?.functionalSkills?.join(", ")}
@@ -174,14 +175,6 @@ const StandardTemplate = ({
               <span className="font-bold">Technical:</span>{" "}
               {skills?.technicalSkills?.join(", ")}
             </div>
-            {/* <div>
-            <span className="font-bold">Frontend Technologies:</span> React.js,
-            Vue.js, Tailwind CSS
-          </div>
-          <div>
-            <span className="font-bold">Backend Development:</span> Express.js,
-            Django, GraphQL
-          </div> */}
           </div>
         </section>
       )}
@@ -189,7 +182,7 @@ const StandardTemplate = ({
       {/* Achievements Section */}
       {achievementsFieldsNotEmpty && achievementsFieldsNotEmpty.length > 0 ? (
         <section>
-          <h2 className="text-[14px] font-bold uppercase border-b pb-1 mb-2">
+          <h2 className="text-[14px] font-bold uppercase border-b border-black pb-1 mb-2">
             Achievements
           </h2>
 

@@ -32,8 +32,6 @@ const AchievementForm = ({ resumeData, setResumeData }: FormProps) => {
       setResumeData({
         ...resumeData,
         achievements: {
-          id: resumeData.achievements?.id || "",
-          resumeId: resumeData.id,
           achievements: values.achievements || null,
         },
       });

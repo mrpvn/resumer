@@ -71,9 +71,7 @@ const WorkExperienceForm = ({ resumeData, setResumeData }: FormProps) => {
       setResumeData({
         ...resumeData,
         workExperiences:
-          values.workExperiences?.map((exp, index) => ({
-            id: resumeData.workExperiences[index]?.id,
-            resumeId: resumeData.id,
+          values.workExperiences?.map((exp) => ({
             companyName: exp?.company || null,
             position: exp?.position || null,
             startDate: exp?.startDate ? new Date(exp.startDate) : null,

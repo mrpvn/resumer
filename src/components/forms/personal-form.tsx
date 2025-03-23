@@ -47,8 +47,6 @@ const PersonalInfoForm = ({ resumeData, setResumeData }: FormProps) => {
       setResumeData({
         ...resumeData,
         personalInfo: {
-          id: resumeData.personalInfo?.id || "",
-          resumeId: resumeData.id,
           firstName: values.firstName || null,
           lastName: values.lastName || null,
           email: values.email || null,

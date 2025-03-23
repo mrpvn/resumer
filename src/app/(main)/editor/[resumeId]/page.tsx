@@ -14,7 +14,7 @@ export default async function Page({
 }: {
   params: { resumeId: string };
 }) {
-  const { resumeId } = params;
+  const { resumeId } = await params;
   if (!resumeId) {
     return null;
   }

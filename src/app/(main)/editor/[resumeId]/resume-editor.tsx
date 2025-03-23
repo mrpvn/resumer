@@ -8,6 +8,8 @@ import { ResumeWithRelations } from "@/lib/types";
 import { LayoutGrid } from "lucide-react";
 import React, { useState } from "react";
 import ResumePreviewContainer from "./resume-preview-container";
+import useUnloadWarning from "@/hooks/useUnloadWarning";
+import useAutosave from "@/hooks/useAutoSave";
 
 const ResumeEditor = ({
   resumeToEdit,
@@ -16,6 +18,10 @@ const ResumeEditor = ({
 }) => {
   const [resumeData, setResumeData] =
     useState<ResumeWithRelations>(resumeToEdit);
+
+  const { hasUnsavedChanges } = useAutosave(resumeData);
+
+  useUnloadWarning(hasUnsavedChanges);
 
   const [currentStep, setCurrentStep] = useState<number>(1);
 

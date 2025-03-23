@@ -69,9 +69,7 @@ const EducationForm = ({ resumeData, setResumeData }: FormProps) => {
       setResumeData({
         ...resumeData,
         educations:
-          values.educations?.map((edu, index) => ({
-            id: resumeData.educations[index]?.id,
-            resumeId: resumeData.id,
+          values.educations?.map((edu) => ({
             institutionName: edu?.institution || null,
             location: edu?.location || null,
             degree: edu?.degree || null,

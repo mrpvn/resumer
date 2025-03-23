@@ -31,8 +31,6 @@ const SkillForm = ({ resumeData, setResumeData }: FormProps) => {
       setResumeData({
         ...resumeData,
         skills: {
-          id: resumeData.skills?.id || "",
-          resumeId: resumeData.id,
           technicalSkills:
             values.technicalSkills
               ?.filter((skill) => skill !== undefined)

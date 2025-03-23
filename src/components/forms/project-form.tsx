@@ -66,9 +66,7 @@ const ProjectForm = ({ resumeData, setResumeData }: FormProps) => {
       setResumeData({
         ...resumeData,
         projects:
-          values.projects?.map((project, index) => ({
-            id: resumeData.projects[index]?.id || "",
-            resumeId: resumeData.id,
+          values.projects?.map((project) => ({
             projectTitle: project?.title || null,
             startDate: project?.startDate ? new Date(project.startDate) : null,
             endDate: project?.endDate ? new Date(project.endDate) : null,
