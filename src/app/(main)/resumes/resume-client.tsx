@@ -2,11 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { GetAllResumes } from "@/actions/actions";
-import { Resume } from "@prisma/client";
 import ResumeCard from "@/components/resume-card";
-import Link from "next/link";
+import { ResumeWithRelations } from "@/lib/types";
 
-const ResumesClient = ({ initialResumes }: { initialResumes: Resume[] }) => {
+const ResumesClient = ({
+  initialResumes,
+}: {
+  initialResumes: ResumeWithRelations[];
+}) => {
   const {
     data: resumes,
     isLoading,
@@ -25,9 +28,7 @@ const ResumesClient = ({ initialResumes }: { initialResumes: Resume[] }) => {
     <div className="container mx-auto py-8">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {resumes.map((resume) => (
-          <Link href={`/editor/${resume.id}`} key={resume.id}>
-            <ResumeCard resume={resume} />
-          </Link>
+          <ResumeCard key={resume.id} resume={resume} />
         ))}
       </div>
     </div>

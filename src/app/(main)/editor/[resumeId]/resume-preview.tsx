@@ -8,10 +8,15 @@ import React, { useRef } from "react";
 
 type Props = {
   resumeData: ResumeWithRelations;
+  contentRef?: React.Ref<HTMLDivElement>;
   className?: string;
 };
 
-export default function ResumePreview({ resumeData, className }: Props) {
+export default function ResumePreview({
+  resumeData,
+  contentRef,
+  className,
+}: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width } = useDimensions(containerRef);
   return (
@@ -27,6 +32,8 @@ export default function ResumePreview({ resumeData, className }: Props) {
         style={{
           zoom: (1 / 794) * width,
         }}
+        ref={contentRef}
+        id="resume-preview"
       >
         <StandardTemplate resumeData={resumeData} />
       </div>

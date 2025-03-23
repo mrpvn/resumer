@@ -170,6 +170,23 @@ export async function UpdateResume(
   }
 }
 
+export async function DeleteResume(resumeId: string) {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
+  try {
+    await prisma.resume.delete({
+      where: { id: resumeId, userId },
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to delete resume");
+  }
+}
+
 export async function GetAllResumes() {
   const { userId } = await auth();
 
