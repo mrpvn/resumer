@@ -18,7 +18,6 @@ const ResumesClient = ({
     queryKey: ["resumes"],
     queryFn: GetAllResumes,
     initialData: initialResumes,
-    staleTime: 1000 * 60 * 5,
   });
 
   if (isLoading) return <p>Loading resumes...</p>;

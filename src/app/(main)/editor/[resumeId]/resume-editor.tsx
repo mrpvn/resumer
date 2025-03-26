@@ -21,7 +21,6 @@ const ResumeEditor = ({
     useState<ResumeWithRelations>(resumeToEdit);
 
   const { hasUnsavedChanges } = useAutosave(resumeData);
-
   useUnloadWarning(hasUnsavedChanges);
 
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -56,7 +55,12 @@ const ResumeEditor = ({
         <FormFooter currentStep={currentStep} setCurrentStep={setCurrentStep} />
       </div>
       <ResumePreviewContainer resumeData={resumeData} />
-      <TemplateSidebar open={open} setOpen={setOpen} />
+      <TemplateSidebar
+        open={open}
+        setOpen={setOpen}
+        resumeData={resumeData}
+        setResumeData={setResumeData}
+      />
     </div>
   );
 };

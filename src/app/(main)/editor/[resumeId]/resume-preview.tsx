@@ -5,7 +5,7 @@ import useTemplate from "@/hooks/useTemplate";
 import { templates } from "@/lib/templates";
 import { ResumeWithRelations } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 type Props = {
   resumeData: ResumeWithRelations;
@@ -20,7 +20,12 @@ export default function ResumePreview({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width } = useDimensions(containerRef);
-  const { selectedTemplate } = useTemplate();
+  const { selectedTemplate, setSelectedTemplate } = useTemplate();
+  useEffect(() => {
+    if (resumeData?.template) {
+      setSelectedTemplate(resumeData.template);
+    }
+  }, [resumeData?.template, setSelectedTemplate]);
   const TemplateComponent = templates.find(
     (template) => template.id === selectedTemplate
   )?.component;

@@ -67,6 +67,7 @@ export async function UpdateResume(
       where: { id: resumeId, userId },
       data: {
         title: resumeData.title,
+        template: resumeData.template,
         updatedAt: new Date(),
 
         // ✅ Update Personal Info
@@ -161,6 +162,14 @@ export async function UpdateResume(
             },
           },
         },
+      },
+      include: {
+        personalInfo: true,
+        workExperiences: true,
+        educations: true,
+        skills: true,
+        projects: true,
+        achievements: true,
       },
     });
     return resume;

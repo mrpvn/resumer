@@ -7,14 +7,19 @@ import {
 } from "@/components/ui/sheet";
 import useTemplate from "@/hooks/useTemplate";
 import { templates } from "@/lib/templates";
+import { ResumeWithRelations } from "@/lib/types";
 import { useState } from "react";
 
 const TemplateSidebar = ({
   open,
   setOpen,
+  resumeData,
+  setResumeData,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  resumeData: ResumeWithRelations;
+  setResumeData: (resumeData: ResumeWithRelations) => void;
 }) => {
   const [purchasedTemplates, setPurchasedTemplates] = useState<string[]>([
     "standard",
@@ -27,6 +32,7 @@ const TemplateSidebar = ({
       (purchasedTemplates.includes(templateId) || !template.locked)
     ) {
       setSelectedTemplate(templateId);
+      setResumeData({ ...resumeData, template: templateId });
     }
   };
   return (
