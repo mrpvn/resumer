@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import ResumePreviewContainer from "./resume-preview-container";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
 import useAutosave from "@/hooks/useAutoSave";
+import TemplateSidebar from "./template-sidebar";
 
 const ResumeEditor = ({
   resumeToEdit,
@@ -24,6 +25,7 @@ const ResumeEditor = ({
   useUnloadWarning(hasUnsavedChanges);
 
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [open, setOpen] = useState(false);
 
   const FormComponent = formSteps.find(
     (step) => step.key === currentStep
@@ -32,7 +34,12 @@ const ResumeEditor = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10">
       <div>
-        <Button variant="outline" size="sm" className="flex gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          className="flex gap-2 cursor-pointer"
+          onClick={() => setOpen(true)}
+        >
           <LayoutGrid />
           Template
         </Button>
@@ -49,6 +56,7 @@ const ResumeEditor = ({
         <FormFooter currentStep={currentStep} setCurrentStep={setCurrentStep} />
       </div>
       <ResumePreviewContainer resumeData={resumeData} />
+      <TemplateSidebar open={open} setOpen={setOpen} />
     </div>
   );
 };

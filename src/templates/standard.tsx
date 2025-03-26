@@ -160,24 +160,26 @@ const StandardTemplate = ({
       ) : null}
 
       {/* Skills Section */}
-      {skills && skills.functionalSkills && skills.technicalSkills && (
-        <section className="mb-4">
-          <h2 className="text-[14px] font-bold uppercase border-b border-black pb-1 mb-2">
-            Skills
-          </h2>
+      {skills &&
+        (skills?.functionalSkills?.length > 0 ||
+          skills?.technicalSkills?.length > 0) && (
+          <section className="mb-4">
+            <h2 className="text-[14px] font-bold uppercase border-b border-black pb-1 mb-2">
+              Skills
+            </h2>
 
-          <div className="text-[11px]">
-            <div>
-              <span className="font-bold">Functional:</span>{" "}
-              {skills?.functionalSkills?.join(", ")}
+            <div className="text-[11px]">
+              <div>
+                <span className="font-bold">Functional:</span>{" "}
+                {skills?.functionalSkills?.join(", ")}
+              </div>
+              <div>
+                <span className="font-bold">Technical:</span>{" "}
+                {skills?.technicalSkills?.join(", ")}
+              </div>
             </div>
-            <div>
-              <span className="font-bold">Technical:</span>{" "}
-              {skills?.technicalSkills?.join(", ")}
-            </div>
-          </div>
-        </section>
-      )}
+          </section>
+        )}
 
       {/* Achievements Section */}
       {achievementsFieldsNotEmpty && achievementsFieldsNotEmpty.length > 0 ? (

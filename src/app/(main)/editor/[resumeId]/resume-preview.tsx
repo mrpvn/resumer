@@ -1,9 +1,10 @@
 "use client";
 
 import useDimensions from "@/hooks/useDimension";
+import useTemplate from "@/hooks/useTemplate";
+import { templates } from "@/lib/templates";
 import { ResumeWithRelations } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import StandardTemplate from "@/templates/standard";
 import React, { useRef } from "react";
 
 type Props = {
@@ -19,6 +20,10 @@ export default function ResumePreview({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width } = useDimensions(containerRef);
+  const { selectedTemplate } = useTemplate();
+  const TemplateComponent = templates.find(
+    (template) => template.id === selectedTemplate
+  )?.component;
   return (
     <div
       className={cn(
@@ -35,7 +40,7 @@ export default function ResumePreview({
         ref={contentRef}
         id="resume-preview"
       >
-        <StandardTemplate resumeData={resumeData} />
+        {TemplateComponent && <TemplateComponent resumeData={resumeData} />}
       </div>
     </div>
   );

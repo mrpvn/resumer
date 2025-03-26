@@ -32,6 +32,7 @@ model User {
 model Resume {
   id              String           @id @default(cuid())
   user            User             @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  template        String?
   userId          String
   title           String?
   personalInfo    PersonalInfo?
