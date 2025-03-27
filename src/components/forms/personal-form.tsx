@@ -75,7 +75,7 @@ const PersonalInfoForm = ({ resumeData, setResumeData }: FormProps) => {
     Error
   >({
     queryKey: ["summary"],
-    queryFn: async () => GenerateSummaryFromAI("Software Engineer"),
+    queryFn: async () => GenerateSummaryFromAI(resumeData?.title || ""),
     enabled: false,
   });
 

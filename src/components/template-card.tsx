@@ -11,21 +11,21 @@ interface TemplateCardProps {
     id: string;
     name: string;
     image: string;
-    locked: boolean;
     price: number;
+    priceId: string;
   };
   isSelected: boolean;
-  isLocked: boolean;
   onSelect: () => void;
   onPurchase: () => void;
+  isPurchased: boolean | undefined;
 }
 
 export default function TemplateCard({
   template,
   isSelected,
-  isLocked,
   onSelect,
   onPurchase,
+  isPurchased,
 }: TemplateCardProps) {
   return (
     <div
@@ -34,7 +34,7 @@ export default function TemplateCard({
         "border-2 hover:shadow-lg",
         isSelected ? "border-primary" : "border-border hover:border-primary/50"
       )}
-      onClick={isLocked ? undefined : onSelect}
+      onClick={onSelect}
     >
       {isSelected && (
         <div className="absolute top-2 right-2 z-10 bg-primary text-primary-foreground rounded-full p-1">
@@ -51,20 +51,14 @@ export default function TemplateCard({
           className="w-full h-auto object-cover aspect-[3/4]"
         />
 
-        {isLocked && (
+        {!isPurchased && (
           <div className="absolute inset-0 bg-background/80 flex flex-col items-center justify-center gap-2 p-4">
             <Lock className="h-8 w-8 text-muted-foreground" />
             <Badge variant="outline" className="mb-2">
               Locked
             </Badge>
-            <Button
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                onPurchase();
-              }}
-            >
-              Purchase ${template.price.toFixed(2)}
+            <Button className="cursor-pointer" size="sm" onClick={onPurchase}>
+              Purchase ₹{template.price.toFixed(2)}
             </Button>
           </div>
         )}

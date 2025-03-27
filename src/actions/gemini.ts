@@ -1,3 +1,5 @@
+"use server";
+
 import GenerativeAI from "@/lib/gemini";
 
 export async function GenerateSummaryFromAI(role: string) {

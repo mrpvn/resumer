@@ -28,6 +28,13 @@ export async function CreateUser(
   }
 }
 
+export async function GetUser(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { userId },
+  });
+  return user;
+}
+
 export async function CreateResume(resumeTitle: string) {
   const { userId } = await auth();
 
