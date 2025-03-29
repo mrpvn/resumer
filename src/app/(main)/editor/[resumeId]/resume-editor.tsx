@@ -6,17 +6,26 @@ import { Button } from "@/components/ui/button";
 import { formSteps } from "@/lib/form-steps";
 import { ResumeWithRelations } from "@/lib/types";
 import { Eye, LayoutGrid, Printer } from "lucide-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ResumePreviewContainer from "./resume-preview-container";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
 import useAutosave from "@/hooks/useAutoSave";
 import TemplateSidebar from "./template-sidebar";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import Image from "next/image";
+import useTemplate from "@/hooks/useTemplate";
+import { useReactToPrint } from "react-to-print";
 
-const ResumeEditor = ({
+export default function ResumeEditor({
   resumeToEdit,
 }: {
   resumeToEdit: ResumeWithRelations;
-}) => {
+}) {
   const [resumeData, setResumeData] =
     useState<ResumeWithRelations>(resumeToEdit);
 
@@ -25,6 +34,12 @@ const ResumeEditor = ({
 
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [open, setOpen] = useState(false);
+  const [sampleResumeOpen, setSampleResumeOpen] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const reactToPrint = useReactToPrint({
+    contentRef,
+    documentTitle: resumeData.title || "Resume",
+  });
 
   const FormComponent = formSteps.find(
     (step) => step.key === currentStep
@@ -43,11 +58,14 @@ const ResumeEditor = ({
             Template
           </Button>
           <div className="flex gap-2 items-center">
-            <Button className="cursor-pointer">
+            <Button
+              onClick={() => setSampleResumeOpen(true)}
+              className="cursor-pointer"
+            >
               <Eye />
               Sample Resume
             </Button>
-            <Button className="cursor-pointer">
+            <Button onClick={() => reactToPrint()} className="cursor-pointer">
               <Printer />
               Print
             </Button>
@@ -66,15 +84,44 @@ const ResumeEditor = ({
         )}
         <FormFooter currentStep={currentStep} setCurrentStep={setCurrentStep} />
       </div>
-      <ResumePreviewContainer resumeData={resumeData} />
+      <ResumePreviewContainer contentRef={contentRef} resumeData={resumeData} />
       <TemplateSidebar
         open={open}
         setOpen={setOpen}
         resumeData={resumeData}
         setResumeData={setResumeData}
       />
+      <SampleResumeDialog
+        open={sampleResumeOpen}
+        setOpen={setSampleResumeOpen}
+      />
     </div>
   );
-};
+}
 
-export default ResumeEditor;
+const SampleResumeDialog = ({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+}) => {
+  const { selectedTemplate } = useTemplate();
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Sample Resume</DialogTitle>
+        </DialogHeader>
+        <div className="w-full h-full">
+          <Image
+            src={`/templates/${selectedTemplate}.png`}
+            alt="Sample Resume"
+            width={595}
+            height={842}
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
