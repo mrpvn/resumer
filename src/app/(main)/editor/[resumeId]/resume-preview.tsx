@@ -20,14 +20,14 @@ export default function ResumePreview({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const { width } = useDimensions(containerRef);
-  const { selectedTemplate, setSelectedTemplate } = useTemplate();
+  const { setSelectedTemplate } = useTemplate();
   useEffect(() => {
     if (resumeData?.template) {
       setSelectedTemplate(resumeData.template);
     }
   }, [resumeData?.template, setSelectedTemplate]);
   const TemplateComponent = templates.find(
-    (template) => template.id === selectedTemplate
+    (template) => template.id === resumeData?.template
   )?.component;
   return (
     <div

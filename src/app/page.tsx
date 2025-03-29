@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import {
   CheckIcon,
@@ -19,8 +20,12 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
 
 export default function Home() {
+  const router = useRouter();
+  const { isSignedIn } = useUser();
   return (
     <div className="flex min-h-screen flex-col">
       {/* Navigation */}
@@ -56,14 +61,33 @@ export default function Home() {
               Pricing
             </Link>
           </nav>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="sm">
-              Log in
+          {isSignedIn ? (
+            <Button
+              onClick={() => router.push("/resumes")}
+              size="sm"
+              className="bg-primary cursor-pointer hover:bg-primary/90"
+            >
+              Get Started
             </Button>
-            <Button size="sm" className="bg-primary hover:bg-primary/90">
-              Sign up
-            </Button>
-          </div>
+          ) : (
+            <div className="flex items-center gap-4">
+              <Button
+                onClick={() => router.push("/sign-in")}
+                className="cursor-pointer"
+                variant="ghost"
+                size="sm"
+              >
+                Log in
+              </Button>
+              <Button
+                onClick={() => router.push("/sign-up")}
+                size="sm"
+                className="bg-primary cursor-pointer hover:bg-primary/90"
+              >
+                Sign up
+              </Button>
+            </div>
+          )}
         </div>
       </header>
 
@@ -112,7 +136,7 @@ export default function Home() {
                     className="w-full h-auto"
                   />
                 </div>
-                <div className="absolute -bottom-6 -right-6 bg-primary text-white p-4 rounded-lg shadow-lg">
+                <div className="absolute -bottom-6 -right-6 bg-primary text-primary-foreground p-4 rounded-lg shadow-lg">
                   <div className="text-sm font-medium">Trusted by</div>
                   <div className="text-2xl font-bold">10,000+</div>
                   <div className="text-sm">job seekers</div>
@@ -354,257 +378,6 @@ export default function Home() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Pricing Section */}
-        <section id="pricing" className="py-20 bg-muted/50 dark:bg-background">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Simple, Transparent Pricing
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Choose the plan that works best for your career goals
-              </p>
-              <div className="mt-8 inline-flex items-center rounded-full border p-1">
-                <Tabs defaultValue="monthly" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="monthly">Monthly</TabsTrigger>
-                    <TabsTrigger value="yearly">
-                      Yearly{" "}
-                      <Badge className="ml-2 bg-muted text-primary dark:bg-muted dark:text-primary">
-                        Save 20%
-                      </Badge>
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="monthly" className="mt-8">
-                    <div className="grid md:grid-cols-3 gap-8">
-                      <Card className="border-none shadow-lg">
-                        <CardHeader>
-                          <CardTitle>Free</CardTitle>
-                          <div className="mt-4">
-                            <span className="text-4xl font-bold">$0</span>
-                            <span className="text-muted-foreground ml-2">
-                              / month
-                            </span>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-3 mb-6">
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>1 resume</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Basic templates</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>PDF downloads</span>
-                            </li>
-                            <li className="flex items-center text-muted-foreground">
-                              <CheckIcon className="h-5 w-5 text-muted-foreground mr-2" />
-                              <span>Limited AI suggestions</span>
-                            </li>
-                          </ul>
-                          <Button className="w-full" variant="outline">
-                            Get Started
-                          </Button>
-                        </CardContent>
-                      </Card>
-                      <Card className="border-none shadow-lg relative">
-                        <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
-                          POPULAR
-                        </div>
-                        <CardHeader>
-                          <CardTitle>Pro</CardTitle>
-                          <div className="mt-4">
-                            <span className="text-4xl font-bold">$12</span>
-                            <span className="text-muted-foreground ml-2">
-                              / month
-                            </span>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-3 mb-6">
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Unlimited resumes</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Premium templates</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>PDF & Word downloads</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Full AI suggestions</span>
-                            </li>
-                          </ul>
-                          <Button className="w-full bg-primary hover:bg-primary/90">
-                            Get Started
-                          </Button>
-                        </CardContent>
-                      </Card>
-                      <Card className="border-none shadow-lg">
-                        <CardHeader>
-                          <CardTitle>Premium</CardTitle>
-                          <div className="mt-4">
-                            <span className="text-4xl font-bold">$29</span>
-                            <span className="text-muted-foreground ml-2">
-                              / month
-                            </span>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-3 mb-6">
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Everything in Pro</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Cover letter builder</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>LinkedIn profile optimization</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Priority support</span>
-                            </li>
-                          </ul>
-                          <Button className="w-full" variant="outline">
-                            Get Started
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </TabsContent>
-                  <TabsContent value="yearly" className="mt-8">
-                    <div className="grid md:grid-cols-3 gap-8">
-                      <Card className="border-none shadow-lg">
-                        <CardHeader>
-                          <CardTitle>Free</CardTitle>
-                          <div className="mt-4">
-                            <span className="text-4xl font-bold">$0</span>
-                            <span className="text-muted-foreground ml-2">
-                              / year
-                            </span>
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-3 mb-6">
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>1 resume</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Basic templates</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>PDF downloads</span>
-                            </li>
-                            <li className="flex items-center text-muted-foreground">
-                              <CheckIcon className="h-5 w-5 text-muted-foreground mr-2" />
-                              <span>Limited AI suggestions</span>
-                            </li>
-                          </ul>
-                          <Button className="w-full" variant="outline">
-                            Get Started
-                          </Button>
-                        </CardContent>
-                      </Card>
-                      <Card className="border-none shadow-lg relative">
-                        <div className="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
-                          POPULAR
-                        </div>
-                        <CardHeader>
-                          <CardTitle>Pro</CardTitle>
-                          <div className="mt-4">
-                            <span className="text-4xl font-bold">$115</span>
-                            <span className="text-muted-foreground ml-2">
-                              / year
-                            </span>
-                          </div>
-                          <div className="text-sm text-green-500 font-medium">
-                            Save $29
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-3 mb-6">
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Unlimited resumes</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Premium templates</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>PDF & Word downloads</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Full AI suggestions</span>
-                            </li>
-                          </ul>
-                          <Button className="w-full bg-primary hover:bg-primary/90">
-                            Get Started
-                          </Button>
-                        </CardContent>
-                      </Card>
-                      <Card className="border-none shadow-lg">
-                        <CardHeader>
-                          <CardTitle>Premium</CardTitle>
-                          <div className="mt-4">
-                            <span className="text-4xl font-bold">$279</span>
-                            <span className="text-muted-foreground ml-2">
-                              / year
-                            </span>
-                          </div>
-                          <div className="text-sm text-green-500 font-medium">
-                            Save $69
-                          </div>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-3 mb-6">
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Everything in Pro</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Cover letter builder</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>LinkedIn profile optimization</span>
-                            </li>
-                            <li className="flex items-center">
-                              <CheckIcon className="h-5 w-5 text-green-500 mr-2" />
-                              <span>Priority support</span>
-                            </li>
-                          </ul>
-                          <Button className="w-full" variant="outline">
-                            Get Started
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </TabsContent>
-                </Tabs>
-              </div>
             </div>
           </div>
         </section>

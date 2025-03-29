@@ -3,17 +3,16 @@ import React from "react";
 import ResumeEditor from "./resume-editor";
 import { GetResume } from "@/actions/actions";
 import { redirect } from "next/navigation";
-import { toast } from "sonner";
 
 export const metadata: Metadata = {
   title: "Design your resume",
 };
 
-export default async function Page({
-  params,
-}: {
-  params: { resumeId: string };
-}) {
+interface PageProps {
+  params: Promise<{ resumeId: string }>;
+}
+
+export default async function Page({ params }: PageProps) {
   const { resumeId } = await params;
   if (!resumeId) {
     return null;
@@ -21,7 +20,6 @@ export default async function Page({
   const resume = await GetResume(resumeId);
 
   if (!resume) {
-    toast.error("Unable to find resume");
     redirect("/resumes");
   }
 

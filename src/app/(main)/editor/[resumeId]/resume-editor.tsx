@@ -5,7 +5,7 @@ import FormFooter from "@/components/form-footer";
 import { Button } from "@/components/ui/button";
 import { formSteps } from "@/lib/form-steps";
 import { ResumeWithRelations } from "@/lib/types";
-import { LayoutGrid } from "lucide-react";
+import { Eye, LayoutGrid, Printer } from "lucide-react";
 import React, { useState } from "react";
 import ResumePreviewContainer from "./resume-preview-container";
 import useUnloadWarning from "@/hooks/useUnloadWarning";
@@ -33,15 +33,27 @@ const ResumeEditor = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10">
       <div>
-        <Button
-          variant="outline"
-          size="sm"
-          className="flex gap-2 cursor-pointer"
-          onClick={() => setOpen(true)}
-        >
-          <LayoutGrid />
-          Template
-        </Button>
+        <div className="flex justify-between items-center">
+          <Button
+            variant="outline"
+            className="flex gap-2 cursor-pointer"
+            onClick={() => setOpen(true)}
+          >
+            <LayoutGrid />
+            Template
+          </Button>
+          <div className="flex gap-2 items-center">
+            <Button className="cursor-pointer">
+              <Eye />
+              Sample Resume
+            </Button>
+            <Button className="cursor-pointer">
+              <Printer />
+              Print
+            </Button>
+          </div>
+        </div>
+
         <BreadcrumbComponent
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
