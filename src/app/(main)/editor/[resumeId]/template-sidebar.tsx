@@ -43,7 +43,7 @@ const TemplateSidebar = ({
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetContent
         side="left"
-        className="w-[400px] sm:w-[540px] overflow-y-auto p-4"
+        className="w-[400px] max-sm:w-[300px] sm:w-[500px] overflow-y-auto p-4"
       >
         <SheetHeader>
           <SheetTitle className="text-2xl font-bold">

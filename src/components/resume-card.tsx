@@ -50,7 +50,7 @@ export default function ResumeCard({
   return (
     <Card className="group relative border gap-3 rounded-lg border-transparent hover:border-border transition-colors bg-secondary">
       <CardHeader>
-        <CardTitle className="text-center sm:text-xs md:text-sm">
+        <CardTitle className="text-center sm:text-xs md:text-sm line-clamp-1">
           {resume?.title}
         </CardTitle>
         <CardDescription className="text-xs text-muted-foreground line-clamp-2 overflow-hidden whitespace-nowrap">
@@ -104,9 +104,11 @@ function MenuButton({
             <Trash className="size-4" />
             Delete
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex items-center gap-2">
-            <Pencil className="size-4" />
-            Edit
+          <DropdownMenuItem asChild className="flex items-center gap-2">
+            <Link href={`/editor/${resumeId}`} prefetch={true}>
+              <Pencil className="size-4" />
+              Edit
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem
             className="flex items-center gap-2"

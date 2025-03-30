@@ -39,7 +39,7 @@ const AchievementForm = ({ resumeData, setResumeData }: FormProps) => {
     return unsubscribe;
   }, [form, resumeData, setResumeData]);
   return (
-    <div className="p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4">
+    <div className="py-5 md:p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4">
       <h2 className="font-bold text-lg">Achievements</h2>
       <p>Add your achievements here</p>
       <Form {...form}>
