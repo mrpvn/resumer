@@ -16,7 +16,7 @@ const Navbar = () => {
   return (
     <div className="flex px-6 py-4 justify-between border-b shadow-md">
       <div className="flex items-center gap-2">
-        <Link href={"/resumes"}>
+        <Link href={"/resumes"} prefetch={true}>
           <Image src="/file.svg" width={35} height={35} alt="Logo" />
         </Link>
         <span className="text-xl font-bold tracking-tight">Resumer</span>

@@ -61,7 +61,7 @@ export default function ResumeCard({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Link href={`/editor/${resume.id}`}>
+        <Link href={`/editor/${resume.id}`} prefetch={true}>
           <ResumePreview
             className="shadow-sm group-hover:shadow-lg overflow-hidden"
             contentRef={contentRef}
