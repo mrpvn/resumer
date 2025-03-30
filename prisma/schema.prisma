@@ -20,7 +20,7 @@ model User {
   lastName  String?
   imageUrl  String?
 
-  subscription Subscription?
+  templates String[]
   resumes      Resume[]
 
   createdAt DateTime @default(now())
@@ -132,21 +132,5 @@ model Achievement {
   resume   Resume @relation(fields: [resumeId], references: [id], onDelete: Cascade)
 
   @@map("achievements")
-}
-
-model Subscription {
-  id        String            @id @default(cuid())
-  user      User?             @relation(fields: [userId], references: [userId], onDelete: Cascade)
-  userId    String?           @unique
-  createdAt DateTime          @default(now())
-  plan      SUBSCRIPTION_PLAN @default(FREE)
-  updatedAt DateTime          @updatedAt
-
-  @@map("subscriptions")
-}
-
-enum SUBSCRIPTION_PLAN {
-  PRO
-  FREE
 }
 
