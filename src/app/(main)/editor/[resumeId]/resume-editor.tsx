@@ -46,7 +46,7 @@ export default function ResumeEditor({
   )?.component;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 p-10 gap-10">
+    <div className="grid grid-cols-1 md:grid-cols-2 max-sm:p-5 sm:p-5 md:p-10 gap-10">
       <div>
         <div className="flex justify-between items-center">
           <Button

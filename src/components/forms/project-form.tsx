@@ -164,7 +164,7 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
   return (
     <div
       className={cn(
-        "my-6 border rounded-md bg-background p-6",
+        "my-6 border rounded-md bg-background max-sm:p-3 sm:p-3 md:p-6",
         isDragging && "shadow-xl z-50 cursor-grabbing relative"
       )}
       ref={setNodeRef}
