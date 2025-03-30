@@ -20,7 +20,7 @@ model User {
   lastName  String?
   imageUrl  String?
 
-  templates String[]
+  templates String[] @default(["standard"])
   resumes      Resume[]
 
   createdAt DateTime @default(now())
