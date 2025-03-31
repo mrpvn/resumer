@@ -54,7 +54,7 @@ export default function ResumeEditor({
             className="flex max-sm:gap-1 sm:gap-1 md:gap-2 cursor-pointer"
             onClick={() => setOpen(true)}
           >
-            <LayoutGrid />
+            <LayoutGrid className="hidden sm:block" />
             Template
           </Button>
           <div className="flex justify-between max-sm:gap-1 sm:gap-1 md:gap-2 items-center">
@@ -62,14 +62,14 @@ export default function ResumeEditor({
               onClick={() => setSampleResumeOpen(true)}
               className="cursor-pointer flex max-sm:gap-1 sm:gap-1 md:gap-2"
             >
-              <Eye />
+              <Eye className="hidden sm:block" />
               Sample Resume
             </Button>
             <Button
               onClick={() => reactToPrint()}
               className="cursor-pointer max-sm:gap-1 sm:gap-1 md:gap-2 flex items-center"
             >
-              <Printer />
+              <Printer className="hidden sm:block" />
               Print
             </Button>
           </div>

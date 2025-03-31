@@ -48,8 +48,8 @@ export default function ResumeCard({
     documentTitle: resume.title || "Resume",
   });
   return (
-    <Card className="group relative border gap-3 rounded-lg border-transparent hover:border-border transition-colors bg-secondary">
-      <CardHeader>
+    <Card className="group max-sm:p-4 relative border gap-3 rounded-lg border-transparent hover:border-border transition-colors bg-secondary">
+      <CardHeader className="max-sm:px-4">
         <CardTitle className="text-center sm:text-xs md:text-sm line-clamp-1">
           {resume?.title}
         </CardTitle>
@@ -60,7 +60,7 @@ export default function ResumeCard({
             : ""}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="max-sm:p-0">
         <Link href={`/editor/${resume.id}`} prefetch={true}>
           <ResumePreview
             className="shadow-sm group-hover:shadow-lg overflow-hidden"
