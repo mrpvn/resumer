@@ -1,10 +1,10 @@
 "use client";
 
 import { Check, Lock } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import CheckoutButton from "./checkout-button";
 
 interface TemplateCardProps {
   template: {
@@ -24,7 +24,6 @@ export default function TemplateCard({
   template,
   isSelected,
   onSelect,
-  onPurchase,
   isPurchased,
 }: TemplateCardProps) {
   return (
@@ -57,9 +56,7 @@ export default function TemplateCard({
             <Badge variant="outline" className="mb-2">
               Locked
             </Badge>
-            <Button className="cursor-pointer" size="sm" onClick={onPurchase}>
-              Purchase ₹{template.price.toFixed(2)}
-            </Button>
+            <CheckoutButton template={template} />
           </div>
         )}
       </div>
