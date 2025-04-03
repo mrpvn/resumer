@@ -244,7 +244,10 @@ function ProjectItem({ id, form, index, remove }: ProjectItemProps) {
               <FormItem className="col-span-2">
                 <FormLabel>Work Summary</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="Resume Builder" {...field} />
+                  <Textarea
+                    placeholder="Enter each bullet point on a new line"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -1,6 +1,7 @@
 import React from "react";
 import { formatDate } from "date-fns";
 import { ResumeWithRelations } from "@/lib/types";
+import Link from "next/link";
 
 const StandardTemplate = ({
   resumeData,
@@ -28,7 +29,7 @@ const StandardTemplate = ({
     ?.split("\n")
     .filter((achievement) => achievement.trim() !== "");
   return (
-    <div className="font-sans text-black">
+    <div className="font-sans text-black p-6">
       {/* Header */}
       <header className="text-center mb-4 break-inside-avoid">
         <h1 className="text-[20px] font-bold">
@@ -137,7 +138,9 @@ const StandardTemplate = ({
               <div key={index} className="mb-2 break-inside-avoid">
                 <div className="flex justify-between items-start">
                   <span className="font-bold text-[12px]">
-                    {project.projectTitle}
+                    <Link href={project.link || ""}>
+                      {project.projectTitle}
+                    </Link>
                   </span>
                   <span className="text-[11px]">
                     {project.startDate &&

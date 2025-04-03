@@ -108,7 +108,7 @@ const WorkExperienceForm = ({ resumeData, setResumeData }: FormProps) => {
 
   return (
     <div className="py-5 md:p-5 shadow-lg rounded-lg border-t-4 border-t-primary my-4">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mb-2">
         <div>
           <h2 className="font-bold text-lg">Work Experience</h2>
           <p>Add your work experience</p>
@@ -274,7 +274,10 @@ function WorkExperienceItem({
               <FormItem className="col-span-2">
                 <FormLabel>Work Summary</FormLabel>
                 <FormControl>
-                  <Textarea {...field} />
+                  <Textarea
+                    placeholder="Enter each bullet point on a new line"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

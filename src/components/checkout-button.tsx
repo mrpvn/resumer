@@ -57,7 +57,9 @@ const CheckoutButton = ({ template }: TemplateProps) => {
   return (
     <Button
       onClick={handlePayment}
-      className={` ${isPending ? "opacity-50 cursor-not-allowed" : ""}`}
+      className={`cursor-pointer ${
+        isPending ? "opacity-50 cursor-not-allowed" : ""
+      }`}
       disabled={isPending}
     >
       {isPending ? "Processing..." : `Buy Template ₹${price}`}

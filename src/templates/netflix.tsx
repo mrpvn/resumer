@@ -40,7 +40,7 @@ const NetflixTemplate = ({
     ?.split("\n")
     .filter((achievement) => achievement.trim() !== "");
   return (
-    <div className="bg-[#232323] text-white p-5">
+    <div className="bg-[#232323] text-white p-6">
       {/* Header Section */}
       <header className="mb-2">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

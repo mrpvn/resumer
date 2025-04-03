@@ -122,18 +122,27 @@
   }
 }
 
-@media print {
-  #resume-preview {
-    zoom: 1 !important;
-    padding: 0;
+@layer base {
+  img {
+    display: initia;
   }
 }
 
-#resume-preview {
-  font-family: Inter;
-}
-
-@page {
-  size: A4;
-  margin: 0.6cm;
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #resume-preview {
+    width: 210mm !important;
+    height: 297mm !important;
+    position: absolute !important;
+    overflow: hidden !important;
+    zoom: 1 !important;
+    transform: scale(1) !important;
+  }
+  @page {
+    size: A4;
+    margin: 0.6cm;
+  }
 }
